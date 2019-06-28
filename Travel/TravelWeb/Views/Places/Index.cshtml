@@ -1,0 +1,65 @@
+﻿@model IEnumerable<TravelWeb.Models.Place>
+
+@{
+    ViewBag.Title = "สถานที่ท่องเที่ยว";
+}
+
+<div class="col-md-12">
+    <h4 style="float: left">รายชื่อสถานที่ท่องเที่ยว</h4>
+    <a href="@Url.Action("Create")" class="btn btn-success btn-sm" style="float: right">เพิ่มสถานที่ท่องเที่ยว</a>
+    <br />
+    <hr />
+</div>
+
+<table class="table table-hover table-bordered table-sm">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(x => x.PlaceName)</th>
+            <th>@Html.DisplayNameFor(x => x.Category.CategoryName)</th>
+            <th>@Html.DisplayNameFor(x => x.Province.ProvinceName)</th>
+            <th>@Html.DisplayNameFor(x => x.PlaceVisitor)</th>
+            <th>@Html.DisplayNameFor(x => x.PlaceRating)</th>
+            <th>ความคิดเห็น</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>@item.PlaceName</td>
+            <td>@item.Category.CategoryName</td>
+            <td>@item.Province.ProvinceName</td>
+            <td>@item.PlaceVisitor</td>
+            <td>@item.PlaceRating</td>
+            <td>@item.Comments.Count</td>
+            <td>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a href="@Url.Action("Edit")/@item.PlaceId" class="btn btn-warning btn-sm">แก้ไข</a>
+                    <a href="@Url.Action("Details")/@item.PlaceId" class="btn btn-primary btn-sm">รายละเอียด</a>
+                    <a href="@Url.Action("Delete")/@item.PlaceId" class="btn btn-danger btn-sm" onclick="return confirm('ยืนยันการลบข้อมูล');">ลบ</a>
+                </div>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<link href="~/Content/DataTables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+@section scripts
+{
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable({
+                ordering: false,
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.10.19/i18n/Thai.json"
+                }
+            });
+        });
+    </script>
+}

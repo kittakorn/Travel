@@ -1,0 +1,18 @@
+﻿@using TravelWeb.Helpers
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+        <ul class="nav navbar-nav navbar-right">
+            <li><a class="nav-link" href=@Url.Action("Index", "Manage")>@User.Identity.Name</a></li>
+            <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">ออกจากระบบ</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a class="nav-link @Html.IsActive("Account","Login")" id="loginLink" href=@Url.Action("Login", "Account",routeValues: null)>เข้าสู่ระบบ</a></li>
+    </ul>
+}

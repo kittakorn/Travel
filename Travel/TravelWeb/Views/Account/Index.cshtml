@@ -1,0 +1,55 @@
+﻿@model IEnumerable<TravelWeb.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "รายชื่อสมาชิก";
+}
+
+<div class="col-md-12">
+    <h4 style="float: left">รายชื่อสมาชิก</h4>
+    <a href="@Url.Action("Register")" class="btn btn-success btn-sm" style="float: right">เพิ่มผู้ดูแลระบบ</a>
+    <br />
+    <hr />
+</div>
+
+<table class="table table-hover table-bordered table-sm">
+    <thead>
+        <tr>
+            <th>ชื่อที่แสดง</th>
+            <th>เบอร์โทรศัพท์</th>
+            <th>อีเมล</th>
+            <th>สิทธิ์</th>
+            <th>วันที่สมัคร</th>
+            <th>เข้าสู่ระบบล่าสุด</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Email</td>
+                <td>@item.UserRole</td>
+                <td>@item.JoinDate.ToString("g")</td>
+                <td>@(item.LoginDate?.ToString("g"))</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<link href="~/Content/DataTables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+@section scripts
+{
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable({
+                ordering: false,
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.10.19/i18n/Thai.json"
+                }
+            });
+        });
+    </script>
+}
