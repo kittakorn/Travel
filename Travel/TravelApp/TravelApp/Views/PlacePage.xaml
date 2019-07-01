@@ -5,7 +5,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
              mc:Ignorable="d"
-             x:Class="TravelApp.Views.PlacePage">
+             x:Class="TravelApp.Views.PlacePage"
+             Title="สถานที่ท่องเที่ยว">
+    <ContentPage.BindingContext>
+        <viewModels:PlaceViewModel></viewModels:PlaceViewModel>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
             <ListView ItemsSource="{Binding Places}"
@@ -22,9 +26,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-
             </ListView>
-
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

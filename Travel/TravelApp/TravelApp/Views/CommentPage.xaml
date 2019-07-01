@@ -3,13 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
              mc:Ignorable="d"
-             x:Class="TravelApp.Views.CommentPage">
+             x:Class="TravelApp.Views.CommentPage"
+             Title="{Binding CommentCount}">
+    <ContentPage.BindingContext>
+        <viewModels:CommentViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+            <ListView ItemsSource="{Binding Comments}"
+                      HasUnevenRows="True"
+                      SelectedItem="{Binding SelectComment, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text="{Binding AspNetUser.Name}"/>
+                                <Label Text="{Binding CommentDescription}" />
+                                <Label Text="{Binding CommentDate}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Entry Text="{Binding Comment.CommentDescription}"></Entry>
+            <Button Text="บันทึก" Command="{Binding PostCommentCommand}"></Button>
+        </StackLayout> 
     </ContentPage.Content>
 </ContentPage>

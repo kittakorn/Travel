@@ -15,8 +15,6 @@ namespace TravelApp.Views
         public AccountPage()
         {
             InitializeComponent();
-            Title = "ข้อมูลส่วนตัว";
-            BindingContext = new AccountViewModel();
         }
     }
 }

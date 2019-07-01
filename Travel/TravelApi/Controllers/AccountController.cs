@@ -153,6 +153,16 @@ namespace TravelApi.Controllers
             return Ok();
         }
 
+        [Route("GetUser")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUser()
+        {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user == null)
+                return NotFound();
+            return Ok(user);
+        }
+
         // POST api/Account/AddExternalLogin
         [Route("AddExternalLogin")]
         public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBindingModel model)
@@ -264,7 +274,7 @@ namespace TravelApi.Controllers
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
-                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
+                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.Name, user.Email, user.Id, user.PhoneNumber, user.UserRole);
                 Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
             }
             else

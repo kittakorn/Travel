@@ -38,13 +38,14 @@ namespace TravelApi.Providers
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;
             }
-
+            user.LoginDate = DateTime.UtcNow;
+            await userManager.UpdateAsync(user);
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
                OAuthDefaults.AuthenticationType);
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
                 CookieAuthenticationDefaults.AuthenticationType);
 
-            AuthenticationProperties properties = CreateProperties(user.UserName);
+            AuthenticationProperties properties = CreateProperties(user.Name, user.Email, user.Id, user.PhoneNumber, user.UserRole);
             AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
             context.Request.Context.Authentication.SignIn(cookiesIdentity);
@@ -86,11 +87,15 @@ namespace TravelApi.Providers
             return Task.FromResult<object>(null);
         }
 
-        public static AuthenticationProperties CreateProperties(string userName)
+        public static AuthenticationProperties CreateProperties(string name, string email, string userId, string phoneNumber, string userRole)
         {
             IDictionary<string, string> data = new Dictionary<string, string>
             {
-                { "userName", userName }
+                { "userId", userId },
+                { "name", name },
+                { "Email", email },
+                {"phoneNumber", phoneNumber},
+                {"role", userRole}
             };
             return new AuthenticationProperties(data);
         }

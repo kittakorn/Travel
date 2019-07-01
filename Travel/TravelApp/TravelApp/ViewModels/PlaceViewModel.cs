@@ -18,7 +18,7 @@ namespace TravelApp.ViewModels
     {
         public PlaceViewModel()
         {
-            GetIdeasCommand.Execute(null);    
+            GetPlaceCommand.Execute(null);    
         }
 
         private readonly ApiService _apiService = new ApiService();
@@ -34,7 +34,7 @@ namespace TravelApp.ViewModels
                 _place = value;
                 OnPropertyChanged();
                 Current.MainPage = new NavigationPage(new MainPage());
-                Current.MainPage.Navigation.PushAsync(new PlaceTabedPage(Place));
+                Current.MainPage.Navigation.PushAsync(new PlaceTabedPage(Place.PlaceId));
             }
         }
 
@@ -49,7 +49,7 @@ namespace TravelApp.ViewModels
             }
         }
 
-        public ICommand GetIdeasCommand
+        public ICommand GetPlaceCommand
         {
             get
             {

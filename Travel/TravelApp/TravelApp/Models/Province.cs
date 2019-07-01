@@ -6,9 +6,8 @@ namespace TravelApp.Models
 {
     class Province
     {
-
         public int ProvinceId { get; set; }
         public string ProvinceName { get; set; }
-        public virtual ICollection<Place> Places { get; set; }
+        public  ICollection<Place> Places { get; set; }
     }
 }

@@ -5,6 +5,27 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="TravelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="UserRole" Type="nvarchar(max)" />
+          <Property Name="JoinDate" Type="datetime" Nullable="false" />
+          <Property Name="LoginDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -22,6 +43,14 @@
           <Property Name="CommentPlaceId" Type="int" Nullable="false" />
           <Property Name="CommentUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
+        <EntityType Name="Favorite">
+          <Key>
+            <PropertyRef Name="FavoriteId" />
+          </Key>
+          <Property Name="FavoriteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FavoritePlaceId" Type="int" Nullable="false" />
+          <Property Name="FavoriteUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
         <EntityType Name="Place">
           <Key>
             <PropertyRef Name="PlaceId" />
@@ -29,8 +58,8 @@
           <Property Name="PlaceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PlaceName" Type="varchar(max)" Nullable="false" />
           <Property Name="PlaceDescription" Type="text" Nullable="false" />
-          <Property Name="PlaceRating" Type="decimal" Precision="2" Scale="1" />
           <Property Name="PlaceImage" Type="varchar(max)" Nullable="false" />
+          <Property Name="PlaceRating" Type="decimal" Precision="2" Scale="1" />
           <Property Name="PlaceLatitude" Type="varchar(max)" Nullable="false" />
           <Property Name="PlaceLongitude" Type="varchar(max)" Nullable="false" />
           <Property Name="PlaceVisitor" Type="int" Nullable="false" />
@@ -47,6 +76,18 @@
           <Property Name="ProvinceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProvinceName" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Comment_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="CommentUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Comments_Place">
           <End Role="Place" Type="Self.Place" Multiplicity="1" />
           <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
@@ -56,6 +97,30 @@
             </Principal>
             <Dependent Role="Comment">
               <PropertyRef Name="CommentPlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favorite_Place">
+          <End Role="Place" Type="Self.Place" Multiplicity="1" />
+          <End Role="Favorite" Type="Self.Favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceId" />
+            </Principal>
+            <Dependent Role="Favorite">
+              <PropertyRef Name="FavoritePlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favorite_User">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Favorite" Type="Self.Favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Favorite">
+              <PropertyRef Name="FavoriteUserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -84,13 +149,27 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="TravelModelStoreContainer">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Favorite" EntityType="Self.Favorite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Province" EntityType="Self.Province" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comment_AspNetUsers" Association="Self.FK_Comment_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
           <AssociationSet Name="FK_Comments_Place" Association="Self.FK_Comments_Place">
             <End Role="Place" EntitySet="Place" />
             <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favorite_Place" Association="Self.FK_Favorite_Place">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="Favorite" EntitySet="Favorite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favorite_User" Association="Self.FK_Favorite_User">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Favorite" EntitySet="Favorite" />
           </AssociationSet>
           <AssociationSet Name="FK_Place_Category" Association="Self.FK_Place_Category">
             <End Role="Category" EntitySet="Category" />
@@ -106,6 +185,29 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TravelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserRole" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JoinDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LoginDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comment_AspNetUsers" FromRole="AspNetUsers" ToRole="Comment" />
+          <NavigationProperty Name="Favorites" Relationship="Self.FK_Favorite_User" FromRole="AspNetUsers" ToRole="Favorite" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -123,7 +225,18 @@
           <Property Name="CommentDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CommentPlaceId" Type="Int32" Nullable="false" />
           <Property Name="CommentUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Comment_AspNetUsers" FromRole="Comment" ToRole="AspNetUsers" />
           <NavigationProperty Name="Place" Relationship="Self.FK_Comments_Place" FromRole="Comment" ToRole="Place" />
+        </EntityType>
+        <EntityType Name="Favorite">
+          <Key>
+            <PropertyRef Name="FavoriteId" />
+          </Key>
+          <Property Name="FavoriteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FavoritePlaceId" Type="Int32" Nullable="false" />
+          <Property Name="FavoriteUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Favorite_User" FromRole="Favorite" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Place" Relationship="Self.FK_Favorite_Place" FromRole="Favorite" ToRole="Place" />
         </EntityType>
         <EntityType Name="Place">
           <Key>
@@ -132,8 +245,8 @@
           <Property Name="PlaceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PlaceName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PlaceDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PlaceRating" Type="Decimal" Precision="2" Scale="1" />
           <Property Name="PlaceImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PlaceRating" Type="Decimal" Precision="2" Scale="1" />
           <Property Name="PlaceLatitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PlaceLongitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PlaceVisitor" Type="Int32" Nullable="false" />
@@ -144,6 +257,7 @@
           <Property Name="PlaceCategoryId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Place_Category" FromRole="Place" ToRole="Category" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Place" FromRole="Place" ToRole="Comment" />
+          <NavigationProperty Name="Favorites" Relationship="Self.FK_Favorite_Place" FromRole="Place" ToRole="Favorite" />
           <NavigationProperty Name="Province" Relationship="Self.FK_Places_Province" FromRole="Place" ToRole="Province" />
         </EntityType>
         <EntityType Name="Province">
@@ -154,6 +268,30 @@
           <Property Name="ProvinceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Places" Relationship="Self.FK_Places_Province" FromRole="Province" ToRole="Place" />
         </EntityType>
+        <Association Name="FK_Comment_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="CommentUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favorite_User">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="Favorite" Type="Self.Favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Favorite">
+              <PropertyRef Name="FavoriteUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Place_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="Place" Type="Self.Place" Multiplicity="*" />
@@ -178,6 +316,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Favorite_Place">
+          <End Role="Place" Type="Self.Place" Multiplicity="1" />
+          <End Role="Favorite" Type="Self.Favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceId" />
+            </Principal>
+            <Dependent Role="Favorite">
+              <PropertyRef Name="FavoritePlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Places_Province">
           <End Role="Province" Type="Self.Province" Multiplicity="1" />
           <End Role="Place" Type="Self.Place" Multiplicity="*" />
@@ -191,10 +341,20 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="Favorites" EntityType="Self.Favorite" />
           <EntitySet Name="Places" EntityType="Self.Place" />
           <EntitySet Name="Provinces" EntityType="Self.Province" />
+          <AssociationSet Name="FK_Comment_AspNetUsers" Association="Self.FK_Comment_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favorite_User" Association="Self.FK_Favorite_User">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Favorite" EntitySet="Favorites" />
+          </AssociationSet>
           <AssociationSet Name="FK_Place_Category" Association="Self.FK_Place_Category">
             <End Role="Category" EntitySet="Categories" />
             <End Role="Place" EntitySet="Places" />
@@ -202,6 +362,10 @@
           <AssociationSet Name="FK_Comments_Place" Association="Self.FK_Comments_Place">
             <End Role="Place" EntitySet="Places" />
             <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favorite_Place" Association="Self.FK_Favorite_Place">
+            <End Role="Place" EntitySet="Places" />
+            <End Role="Favorite" EntitySet="Favorites" />
           </AssociationSet>
           <AssociationSet Name="FK_Places_Province" Association="Self.FK_Places_Province">
             <End Role="Province" EntitySet="Provinces" />
@@ -214,6 +378,28 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="TravelModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="TravelModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
+                <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="TravelModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -233,14 +419,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Favorites">
+            <EntityTypeMapping TypeName="TravelModel.Favorite">
+              <MappingFragment StoreEntitySet="Favorite">
+                <ScalarProperty Name="FavoriteId" ColumnName="FavoriteId" />
+                <ScalarProperty Name="FavoritePlaceId" ColumnName="FavoritePlaceId" />
+                <ScalarProperty Name="FavoriteUserId" ColumnName="FavoriteUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Places">
             <EntityTypeMapping TypeName="TravelModel.Place">
               <MappingFragment StoreEntitySet="Place">
                 <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
                 <ScalarProperty Name="PlaceName" ColumnName="PlaceName" />
                 <ScalarProperty Name="PlaceDescription" ColumnName="PlaceDescription" />
-                <ScalarProperty Name="PlaceRating" ColumnName="PlaceRating" />
                 <ScalarProperty Name="PlaceImage" ColumnName="PlaceImage" />
+                <ScalarProperty Name="PlaceRating" ColumnName="PlaceRating" />
                 <ScalarProperty Name="PlaceLatitude" ColumnName="PlaceLatitude" />
                 <ScalarProperty Name="PlaceLongitude" ColumnName="PlaceLongitude" />
                 <ScalarProperty Name="PlaceVisitor" ColumnName="PlaceVisitor" />

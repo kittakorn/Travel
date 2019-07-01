@@ -20,7 +20,7 @@ namespace TravelWeb.Controllers
         public async Task<ActionResult> Index()
         {
             var places = _db.Places.Include(p => p.Category).Include(p => p.Province);
-            return View(await places.ToListAsync());
+            return View(await _db.Places.ToListAsync());
         }
 
         public async Task<ActionResult> Details(int? id)

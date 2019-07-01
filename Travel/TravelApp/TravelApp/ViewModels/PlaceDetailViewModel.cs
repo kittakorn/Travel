@@ -1,24 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows.Input;
 using TravelApp.Annotations;
+using TravelApp.Helpers;
 using TravelApp.Models;
+using TravelApp.Services;
+using TravelApp.Views;
+using Xamarin.Forms;
 
 namespace TravelApp.ViewModels
 {
     class PlaceDetailViewModel : INotifyPropertyChanged
     {
-        private Place _place;
+        private readonly ApiService _apiService = new ApiService();
 
-        public PlaceDetailViewModel()
+        public PlaceDetailViewModel() { }
+        public PlaceDetailViewModel(int id)
         {
+            PlaceId = id;
+            GetPlaceCommand.Execute(null);
 
         }
-        public PlaceDetailViewModel(Place place)
+
+        private Place _place;
+        private int _placeId;
+
+
+        public int PlaceId
         {
-            Place = place;
+            get => _placeId;
+            set
+            {
+                if (value == _placeId) return;
+                _placeId = value;
+                OnPropertyChanged();
+            }
         }
 
         public Place Place
@@ -29,6 +49,17 @@ namespace TravelApp.ViewModels
                 if (Equals(value, _place)) return;
                 _place = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public ICommand GetPlaceCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    Place = await _apiService.GetPlaceAsync(PlaceId);
+                });
             }
         }
 

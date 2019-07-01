@@ -5,11 +5,24 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
              mc:Ignorable="d"
-             x:Class="TravelApp.Views.AccountPage">
+             x:Class="TravelApp.Views.AccountPage"
+             Title="ข้อมูลส่วนตัว">
+
+    <ContentPage.BindingContext>
+        <viewModels:AccountViewModel/>
+    </ContentPage.BindingContext>
+
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="เข้าสู่ระบบ" Command="{Binding LoginViewCommand}"></Button>
-            <Button Text="สมัครสมาชิก"  Command="{Binding RegisterViewCommand}"></Button>
+            <Label Text="{Binding User.Name}"  IsVisible="{Binding Logout}"></Label>
+            <Label Text="{Binding User.Email}" IsVisible="{Binding Logout}"></Label>
+            <Label Text="{Binding User.PhoneNumber}" IsVisible="{Binding Logout}"></Label>
+            <Label Text="{Binding User.JoinDate}" IsVisible="{Binding Logout}"></Label>
+            <Label Text="{Binding User.LoginDate}" IsVisible="{Binding Logout}"></Label>
+            <Button Text="ออกจากระบบ" IsVisible="{Binding Logout}" Command="{Binding LogoutCommand}"></Button>
+            <Button Text="เข้าสู่ระบบ" IsVisible="{Binding Login}" Command="{Binding LoginViewCommand}"></Button>
+            <Button Text="สมัครสมาชิก" IsVisible="{Binding Login}" Command="{Binding RegisterViewCommand}"></Button>
         </StackLayout>
     </ContentPage.Content>
+
 </ContentPage>

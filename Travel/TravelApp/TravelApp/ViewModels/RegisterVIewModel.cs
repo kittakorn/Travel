@@ -40,7 +40,12 @@ namespace TravelApp.ViewModels
                 {
                     if (await _apiService.RegisterAsync(Register))
                     {
-                       Application.Current.MainPage?.DisplayAlert("แจ้งเตือน", "true", "ปิด");
+                        if (await _apiService.LoginAsync(Register.Email, Register.Password))
+                        {
+                            var mainPage = new MainPage() as TabbedPage;
+                            mainPage.CurrentPage = mainPage.Children[1];
+                            Application.Current.MainPage = mainPage;
+                        }
                     }
                     else
                     {

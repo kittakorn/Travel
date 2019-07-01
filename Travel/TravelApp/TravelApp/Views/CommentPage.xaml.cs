@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelApp.Models;
+using TravelApp.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,10 +13,11 @@ namespace TravelApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CommentPage : ContentPage
     {
-        internal CommentPage(Place place)
+        internal CommentPage(int id)
         {
             InitializeComponent();
-            Title = "ความคิดเห็น";
+            var commentViewModel = new CommentViewModel(id);
+            BindingContext = commentViewModel;
         }
     }
 }

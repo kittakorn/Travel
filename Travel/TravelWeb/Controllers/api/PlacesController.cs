@@ -16,23 +16,23 @@ namespace TravelWeb.Controllers.api
     public class PlacesController : ApiController
     {
         private readonly DatabaseEntities _db = new DatabaseEntities();
-
         // GET: api/Places
-        public IQueryable<Place> GetPlaces()
+        public IQueryable<object> GetPlaces()
         {
-            return _db.Places;
+            var places = _db.Places.ToList().Select(x => new PlaceViewModel(x));
+            return places.AsQueryable();
         }
 
         // GET: api/Places/5
         [ResponseType(typeof(Place))]
         public async Task<IHttpActionResult> GetPlace(int id)
         {
-            Place place = await _db.Places.FindAsync(id);
-            if (place == null)
+            Place findPlace = await _db.Places.FindAsync(id);
+            if (findPlace == null)
             {
                 return NotFound();
             }
-
+            PlaceViewModel place = new PlaceViewModel(findPlace);
             return Ok(place);
         }
 

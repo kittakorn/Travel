@@ -12,5 +12,12 @@ namespace TravelApp.Helpers
             get => Preferences.Get("AccessToken", "");
             set => Preferences.Set("AccessToken", value);
         }
+        public static string UserId
+        {
+            get => Preferences.Get("UserId", "");
+            set => Preferences.Set("UserId", value);
+        }
+
+        
     }
 }

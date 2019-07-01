@@ -13,11 +13,10 @@ namespace TravelApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlaceDetailPage : ContentPage
     {
-        internal PlaceDetailPage(Place place)
+        internal PlaceDetailPage(int id)
         {
             InitializeComponent();
-            Title = "รายละเอียด";
-            var placeDetail = new PlaceDetailViewModel { Place = place };
+            var placeDetail = new PlaceDetailViewModel(id);
             BindingContext = placeDetail;
         }
         protected override bool OnBackButtonPressed()

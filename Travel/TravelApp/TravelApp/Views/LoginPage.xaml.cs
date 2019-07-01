@@ -25,7 +25,5 @@ namespace TravelApp.Views
             return true;
         }
 
-
-
     }
 }

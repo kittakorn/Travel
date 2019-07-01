@@ -12,12 +12,12 @@ namespace TravelApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlaceTabedPage : TabbedPage
     {
-        internal PlaceTabedPage(Place place)
+        internal PlaceTabedPage(int id)
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            Children.Add(new PlaceDetailPage(place));
-            Children.Add(new CommentPage(place));
+            Children.Add(new PlaceDetailPage(id));
+            Children.Add(new CommentPage(id));
         }
     }
 }

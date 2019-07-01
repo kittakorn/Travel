@@ -12,34 +12,35 @@ namespace TravelWeb.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Place
+    public partial class AspNetUser
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Place()
+        public AspNetUser()
         {
             this.Comments = new HashSet<Comment>();
             this.Favorites = new HashSet<Favorite>();
         }
     
-        public int PlaceId { get; set; }
-        public string PlaceName { get; set; }
-        public string PlaceDescription { get; set; }
-        public string PlaceImage { get; set; }
-        public Nullable<decimal> PlaceRating { get; set; }
-        public string PlaceLatitude { get; set; }
-        public string PlaceLongitude { get; set; }
-        public int PlaceVisitor { get; set; }
-        public string PlaceAddress { get; set; }
-        public string PlacePhone { get; set; }
-        public string PlaceOpenDate { get; set; }
-        public int PlaceProvinceId { get; set; }
-        public int PlaceCategoryId { get; set; }
+        public string Id { get; set; }
+        public string Email { get; set; }
+        public bool EmailConfirmed { get; set; }
+        public string PasswordHash { get; set; }
+        public string SecurityStamp { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool PhoneNumberConfirmed { get; set; }
+        public bool TwoFactorEnabled { get; set; }
+        public Nullable<System.DateTime> LockoutEndDateUtc { get; set; }
+        public bool LockoutEnabled { get; set; }
+        public int AccessFailedCount { get; set; }
+        public string UserName { get; set; }
+        public string Name { get; set; }
+        public string UserRole { get; set; }
+        public System.DateTime JoinDate { get; set; }
+        public Nullable<System.DateTime> LoginDate { get; set; }
     
-        public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Favorite> Favorites { get; set; }
-        public virtual Province Province { get; set; }
     }
 }

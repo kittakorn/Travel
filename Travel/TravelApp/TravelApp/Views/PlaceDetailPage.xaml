@@ -5,12 +5,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
              mc:Ignorable="d"
-             x:Class="TravelApp.Views.PlaceDetailPage">
+             x:Class="TravelApp.Views.PlaceDetailPage"
+             Title="ความคิดเห็น">
+    <ContentPage.BindingContext>
+        <viewModels:PlaceDetailViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding Place.PlaceName}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="{Binding Place.PlaceName}"/>
+            <Label Text="{Binding Place.PlaceAddress}"/>
+            <Label Text="{Binding Place.PlaceDescription}"/>
+            <Label Text="{Binding Place.PlaceRating}"/>
+            <Label Text="{Binding Place.PlaceLatitude}"/>
+            <Label Text="{Binding Place.PlaceLongitude}"/>
+            <Label Text="{Binding Place.PlacePhone}"/>
+            <Label Text="{Binding Place.PlaceOpenDate}"/>
+            <ListView ItemsSource="{Binding Place.PlaceImage}"
+                      HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Image Source="{Binding .}" WidthRequest="100" HeightRequest="100"></Image>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

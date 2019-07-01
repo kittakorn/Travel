@@ -12,13 +12,11 @@ namespace TravelWeb.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Comment
+    public partial class Favorite
     {
-        public int CommentId { get; set; }
-        public string CommentDescription { get; set; }
-        public System.DateTime CommentDate { get; set; }
-        public int CommentPlaceId { get; set; }
-        public string CommentUserId { get; set; }
+        public int FavoriteId { get; set; }
+        public int FavoritePlaceId { get; set; }
+        public string FavoriteUserId { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Place Place { get; set; }

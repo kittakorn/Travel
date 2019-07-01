@@ -188,6 +188,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\api\CommentsController.cs" />
     <Compile Include="Controllers\api\PlacesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -198,10 +199,17 @@
     <Compile Include="Helpers\Extension.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetUser.cs">
+      <DependentUpon>TravelModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Category.cs">
       <DependentUpon>TravelModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Comment.cs">
+      <DependentUpon>TravelModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CommentViewModel.cs" />
+    <Compile Include="Models\Favorite.cs">
       <DependentUpon>TravelModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
@@ -209,6 +217,7 @@
     <Compile Include="Models\Place.cs">
       <DependentUpon>TravelModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PlaceViewModel.cs" />
     <Compile Include="Models\Province.cs">
       <DependentUpon>TravelModel.tt</DependentUpon>
     </Compile>
@@ -637,6 +646,7 @@
     <Content Include="Models\TravelModel.edmx.diagram">
       <DependentUpon>TravelModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

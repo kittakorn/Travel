@@ -50,7 +50,14 @@ namespace TravelApp.ViewModels
                 {
                     if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
                         await Application.Current.MainPage.DisplayAlert("แจ้งเตือน", "กรุณาณกรอกข้อมูล", "ปิด");
-                    Setting.AccessToken = await _apiService.LoginAsync(Email, Password);
+                    if (await _apiService.LoginAsync(Email, Password))
+                    {
+                        var mainPage = new MainPage() as TabbedPage;
+                        mainPage.CurrentPage = mainPage.Children[1];
+                        Application.Current.MainPage = mainPage;
+                    }
+                    else
+                        await Application.Current.MainPage.DisplayAlert("แจ้งเตือน", "เข้าสู่ระบบไม่สำเร็จ", "ปิด");
                 });
             }
         }

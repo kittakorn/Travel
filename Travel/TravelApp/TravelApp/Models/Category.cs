@@ -9,6 +9,6 @@ namespace TravelApp.Models
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
 
-        public virtual ICollection<Place> Places { get; set; }
+        public ICollection<Place> Places { get; set; }
     }
 }
