@@ -27,8 +27,19 @@ namespace TravelApp.ViewModels
         }
 
         private Place _place;
+        private List<string> _image;
         private int _placeId;
 
+        public List<string> Image
+        {
+            get => _image;
+            set
+            {
+                if (Equals(value, _image)) return;
+                _image = value;
+                OnPropertyChanged();
+            }
+        }
 
         public int PlaceId
         {
@@ -59,6 +70,9 @@ namespace TravelApp.ViewModels
                 return new Command(async () =>
                 {
                     Place = await _apiService.GetPlaceAsync(PlaceId);
+                    Image = new List<string>();
+                    foreach (var image in Place.PlaceImage)
+                        Image.Add(Constant.ApiAddress + "Images/" + image);
                 });
             }
         }

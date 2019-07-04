@@ -20,7 +20,7 @@
             <Label Text="{Binding Place.PlaceLongitude}"/>
             <Label Text="{Binding Place.PlacePhone}"/>
             <Label Text="{Binding Place.PlaceOpenDate}"/>
-            <ListView ItemsSource="{Binding Place.PlaceImage}"
+            <ListView ItemsSource="{Binding Image}"
                       HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
