@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using TravelApp.Annotations;
 using TravelApp.Helpers;
@@ -35,16 +30,6 @@ namespace TravelApp.ViewModels
             }
         }
 
-        public AspNetUser User
-        {
-            get => _user;
-            set
-            {
-                if (Equals(value, _user)) return;
-                _user = value;
-                OnPropertyChanged();
-            }
-        }
 
         private bool _login;
         private bool _logout;
@@ -70,6 +55,16 @@ namespace TravelApp.ViewModels
                 OnPropertyChanged();
             }
         }
+        public AspNetUser User
+        {
+            get => _user;
+            set
+            {
+                if (Equals(value, _user)) return;
+                _user = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand LogoutCommand
         {
@@ -80,6 +75,9 @@ namespace TravelApp.ViewModels
                     Preferences.Clear();
                     Login = true;
                     Logout = false;
+                    var mainPage = new MainPage() as TabbedPage;
+                    mainPage.CurrentPage = mainPage.Children[2];
+                    Current.MainPage = new NavigationPage(mainPage);
                 });
             }
         }
@@ -90,8 +88,29 @@ namespace TravelApp.ViewModels
             {
                 return new Command(() =>
                 {
-                    Current.MainPage = new NavigationPage(new MainPage());
                     Current.MainPage.Navigation.PushAsync(new LoginPage());
+                });
+            }
+        }
+
+        public ICommand ChangePasswordViewCommand
+        {
+            get
+            {
+                return new Command(() =>
+                {
+                    Current.MainPage.Navigation.PushAsync(new ChangePasswordPage());
+                });
+            }
+        }
+
+        public ICommand EditProfileViewCommand
+        {
+            get
+            {
+                return new Command(() =>
+                {
+                    Current.MainPage.Navigation.PushAsync(new EditProfilePage(User));
                 });
             }
         }
@@ -103,11 +122,10 @@ namespace TravelApp.ViewModels
                 return new Command(async () =>
                 {
                     User = new AspNetUser();
-                    //User = await _apiService.GetUserAsync();
+                    User = await _apiService.GetUserAsync();
                 });
             }
         }
-
 
         public ICommand RegisterViewCommand
         {
@@ -115,7 +133,6 @@ namespace TravelApp.ViewModels
             {
                 return new Command(() =>
                 {
-                    Current.MainPage = new NavigationPage(new MainPage());
                     Current.MainPage.Navigation.PushAsync(new RegisterPage());
                 });
             }

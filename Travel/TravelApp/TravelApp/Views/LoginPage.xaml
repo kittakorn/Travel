@@ -6,17 +6,21 @@
              xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
              mc:Ignorable="d"
              x:Class="TravelApp.Views.LoginPage"
-             Title="เข้าสุ่ระบบ">
+             Title="เข้าสุ่ระบบ"
+             Visual="Material">
     <ContentPage.BindingContext>
         <viewModels:LoginViewModel/>
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-        <StackLayout>
-            <Entry Placeholder="อีเมล" Text="{Binding Email}"></Entry>
-            <Entry Placeholder="รหัสผ่าน" Text="{Binding Password}"></Entry>
-            <Button Text="เข้าสู่ระบบ" Command="{Binding LoginCommand}"></Button>
+        <Frame  VerticalOptions="CenterAndExpand" Margin="10" >
+            <StackLayout>
+                <Entry Placeholder="อีเมล" x:Name="EmailEntry" Keyboard="Email" Text="{Binding Email}" TextColor="Green"></Entry>
+                <Entry Placeholder="รหัสผ่าน" x:Name="PasswordEntry" Text="{Binding Password}" IsPassword="True" TextColor="Green"></Entry>
+                <Button Text="เข้าสู่ระบบ" Command="{Binding LoginCommand}" BackgroundColor="#449D44" TextColor="White"></Button>
         </StackLayout>
+        </Frame>
     </ContentPage.Content>
+
 
 </ContentPage>

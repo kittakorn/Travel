@@ -14,7 +14,7 @@ namespace TravelWeb.Models
             CommentId = comment.CommentId;
             Name = comment.AspNetUser.Name;
             CommentUserId = comment.CommentUserId;
-            CommentPlaceId = CommentPlaceId;
+            CommentPlaceId = comment.CommentPlaceId;
         }
         public int CommentId { get; set; }
         public string Name { get; set; }

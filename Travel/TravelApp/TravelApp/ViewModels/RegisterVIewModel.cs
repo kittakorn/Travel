@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using Plugin.Toast;
 using TravelApp.Annotations;
+using TravelApp.Helpers;
 using TravelApp.Models;
 using TravelApp.Services;
 using Xamarin.Forms;
@@ -38,19 +39,30 @@ namespace TravelApp.ViewModels
             {
                 return new Command(async () =>
                 {
-                    if (await _apiService.RegisterAsync(Register))
+                    try
                     {
-                        if (await _apiService.LoginAsync(Register.Email, Register.Password))
+                        if (await _apiService.RegisterAsync(Register))
                         {
-                            var mainPage = new MainPage() as TabbedPage;
-                            mainPage.CurrentPage = mainPage.Children[1];
-                            Application.Current.MainPage = mainPage;
+                            await Task.Delay(1000);
+                            Toast.Success("สมัครสมาชิกสำเร็จ กำลังเข้าสู่ระบบ......");
+                            if (await _apiService.LoginAsync(Register.Email, Register.Password))
+                            {
+                                var mainPage = new MainPage() as TabbedPage;
+                                mainPage.CurrentPage = mainPage.Children[2];
+                                Application.Current.MainPage = new NavigationPage(mainPage);
+                            }
+                            else Toast.Error();
+                        }
+                        else
+                        {
+                            Toast.Show();
                         }
                     }
-                    else
+                    catch
                     {
-                        Application.Current.MainPage?.DisplayAlert("แจ้งเตือน", "false", "ปิด");
+                        Toast.Error();
                     }
+                    
                 });
             }
         }

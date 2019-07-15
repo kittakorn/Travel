@@ -55,9 +55,9 @@ namespace TravelApi
             //    consumerKey: "",
             //    consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //    appId: "",
-            //    appSecret: "");
+            app.UseFacebookAuthentication(
+                appId: "2417531788569735",
+                appSecret: "41baa72a4e61747b169b3e1de4eeb424");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

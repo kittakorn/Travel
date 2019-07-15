@@ -6,17 +6,18 @@
              xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
              mc:Ignorable="d"
              x:Class="TravelApp.Views.EditOrDeleteCommentPage"
-             Title="แก้ไขความคิดเห็ฯ">
+             Title="แก้ไขความคิดเห็น"
+             Visual="Material">
 
     <ContentPage.BindingContext>
         <viewModels:EditOrDeleteCommentViewModel/>
     </ContentPage.BindingContext>
-
+    <ContentPage.ToolbarItems>
+        <ToolbarItem  Order="Primary" IconImageSource="ic_action_save.png" Priority="1"  Command="{Binding PutCommentCommand}"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
-           <Editor Text="{Binding Comment.CommentDescription}"></Editor>
-            <Button Text="บันทึก"></Button>
-            <Button Text="ลบ"></Button>
+            <Editor Text="{Binding Comment.CommentDescription}" Margin="5" AutoSize="TextChanges" MaxLength="100" TextColor="Green" Placeholder="ข้อความ"></Editor>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

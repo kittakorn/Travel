@@ -15,6 +15,7 @@ namespace TravelApp.Views
         public PlacePage()
         {
             InitializeComponent();
+            BindingContext = new PlaceViewModel();
         }
     }
 }

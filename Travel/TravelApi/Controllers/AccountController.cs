@@ -26,9 +26,7 @@ namespace TravelApi.Controllers
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
-        public AccountController()
-        {
-        }
+        public AccountController() { }
 
         public AccountController(ApplicationUserManager userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
@@ -39,14 +37,8 @@ namespace TravelApi.Controllers
 
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get => _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            private set => _userManager = value;
         }
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
@@ -160,6 +152,25 @@ namespace TravelApi.Controllers
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user == null)
                 return NotFound();
+            return Ok(user);
+        }
+
+        [Route("EditProfile")]
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IHttpActionResult> EditProfile(EditProfileBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await UserManager.FindAsync(model.Email, model.Password);
+            if (user == null)
+                return NotFound();
+            user.Name = model.Name;
+            user.PhoneNumber = model.PhoneNumber;
+            await UserManager.UpdateAsync(user);
             return Ok(user);
         }
 

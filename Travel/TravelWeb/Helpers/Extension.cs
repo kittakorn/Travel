@@ -28,7 +28,7 @@ namespace TravelWeb.Helpers
             var listImageName = new List<string>();
             foreach (var image in images)
             {
-                var imageName = DateTime.Now.Ticks + ".jpg";
+                var imageName = DateTime.Now.Ticks + image.FileName + ".jpg";
                 string path = System.IO.Path.Combine(Path, imageName);
                 image.SaveAs(path);
                 listImageName.Add(imageName);

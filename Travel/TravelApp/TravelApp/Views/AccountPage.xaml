@@ -5,24 +5,60 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
              mc:Ignorable="d"
-             x:Class="TravelApp.Views.AccountPage"
-             Title="ข้อมูลส่วนตัว">
+             Visual="Material"
+             x:Class="TravelApp.Views.AccountPage">
 
     <ContentPage.BindingContext>
         <viewModels:AccountViewModel/>
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="{Binding User.Name}"  IsVisible="{Binding Logout}"></Label>
-            <Label Text="{Binding User.Email}" IsVisible="{Binding Logout}"></Label>
-            <Label Text="{Binding User.PhoneNumber}" IsVisible="{Binding Logout}"></Label>
-            <Label Text="{Binding User.JoinDate}" IsVisible="{Binding Logout}"></Label>
-            <Label Text="{Binding User.LoginDate}" IsVisible="{Binding Logout}"></Label>
-            <Button Text="ออกจากระบบ" IsVisible="{Binding Logout}" Command="{Binding LogoutCommand}"></Button>
-            <Button Text="เข้าสู่ระบบ" IsVisible="{Binding Login}" Command="{Binding LoginViewCommand}"></Button>
-            <Button Text="สมัครสมาชิก" IsVisible="{Binding Login}" Command="{Binding RegisterViewCommand}"></Button>
-        </StackLayout>
+        <Frame Margin="10">
+            <StackLayout>
+                <Grid  Margin="5,0,5,10"  IsVisible="{Binding Logout}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label Text="อีเมล" Grid.Column="0"></Label>
+                    <Label Text="{Binding User.Email}" Grid.Column="1"></Label>
+                    <Label Text="ชื่อที่แสดง" Grid.Row="1" Grid.Column="0" ></Label>
+                    <Label Text="{Binding User.Name}" Grid.Row="1" Grid.Column="1"></Label>
+                    <Label Text="เบอร์โทรศัพท์" Grid.Row="2" Grid.Column="0" ></Label>
+                    <Label Text="{Binding User.PhoneNumber}" Grid.Row="2" Grid.Column="1"></Label>
+                    <Label Text="วันที่สมัคร" Grid.Row="3" Grid.Column="0" ></Label>
+                    <Label Text="{Binding User.JoinDate}" Grid.Row="3" Grid.Column="1"></Label>
+                    <Label Text="เข้าสู่ระบบล่าสุด" Grid.Row="4" Grid.Column="0" ></Label>
+                    <Label Text="{Binding User.LoginDate}" Grid.Row="4" Grid.Column="1"></Label>
+                </Grid>
+                <Grid  Margin="5,0,5,0"  IsVisible="{Binding Logout}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Button Text="แก้ไขข้อมูล" Grid.Column="0" BackgroundColor="#5bc0de" Command="{Binding EditProfileViewCommand}"></Button>
+                    <Button Text="เปลี่ยนรหัสผ่าน" Grid.Column="1" BackgroundColor="#d58512" Command="{Binding ChangePasswordViewCommand}"></Button>
+                </Grid>
+                <Button Text="ออกจากระบบ"  Margin="5,0,5,0"   BackgroundColor="#C9302C" IsVisible="{Binding Logout}" Command="{Binding LogoutCommand}"></Button>
+                <StackLayout  VerticalOptions="CenterAndExpand" IsVisible="{Binding Login}">
+
+                    <Button Text="เข้าสู่ระบบ"  Command="{Binding LoginViewCommand}" BackgroundColor="#5bc0de" ></Button>
+                    <Label Text="หรือ" HorizontalOptions="CenterAndExpand"></Label>
+                    <Button Text="สมัครสมาชิก"  Command="{Binding RegisterViewCommand}" BackgroundColor="#dddddd" ></Button>
+           </StackLayout>
+
+</StackLayout>
+        </Frame>
     </ContentPage.Content>
 
 </ContentPage>

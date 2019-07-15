@@ -6,18 +6,21 @@
              xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
              mc:Ignorable="d"
              x:Class="TravelApp.Views.RegisterPage"
-             Title="สมัครสมาชิก">
+             Title="สมัครสมาชิก"
+             Visual="Material">
     <ContentPage.BindingContext>
         <viewModels:RegisterViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
+        <Frame  VerticalOptions="CenterAndExpand" Margin="10" >
         <StackLayout>
-            <Entry Placeholder="อีเมล" Text="{Binding Register.Email}"></Entry>
-            <Entry Placeholder="รหัสผ่าน" Text="{Binding Register.Password}"></Entry>
-            <Entry Placeholder="ยืนยันรหัสผ่าน" Text="{Binding Register.ConfirmPassword}"></Entry>
-            <Entry Placeholder="ชื่อที่แสดง" Text="{Binding Register.Name}"></Entry>
-            <Entry Placeholder="เบอร์โทรศัพท์" Text="{Binding Register.Phone}"></Entry>
-            <Button Text="สมัครสมาชิก" Command="{Binding RegisterCommand}"></Button>
+                <Entry Placeholder="อีเมล" x:Name="EmailEntry" Text="{Binding Register.Email}" TextColor="Green" Keyboard="Email"></Entry>
+                <Entry Placeholder="รหัสผ่าน" x:Name="PasswordEntry" Text="{Binding Register.Password}" IsPassword="True" TextColor="Green"></Entry>
+                <Entry Placeholder="ยืนยันรหัสผ่าน" x:Name="ConfirmPassowrdEntry" Text="{Binding Register.ConfirmPassword}" IsPassword="True" TextColor="Green"></Entry>
+                <Entry Placeholder="ชื่อที่แสดง" x:Name="NameEntry" Text="{Binding Register.Name}" TextColor="Green"></Entry>
+                <Entry Placeholder="เบอร์โทรศัพท์" x:Name="PhoneEntry" Text="{Binding Register.Phone}" TextColor="Green" Keyboard="Telephone"></Entry>
+                <Button Text="สมัครสมาชิก" Command="{Binding RegisterCommand}"  BackgroundColor="#449D44" TextColor="White"></Button>
         </StackLayout>
+        </Frame>
     </ContentPage.Content>
 </ContentPage>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
+             mc:Ignorable="d"
+             x:Class="TravelApp.Views.EditProfilePage"
+             Title="แก้ไขข้อมูล"
+             Visual="Material">
+    <ContentPage.BindingContext>
+        <viewModels:EditProfileViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Frame  VerticalOptions="CenterAndExpand" Margin="10" >
+            <StackLayout>
+                <Entry Placeholder="อีเมล" x:Name="EmailEntry" Text="{Binding Profile.Email}" TextColor="Green" Keyboard="Email" IsReadOnly="True"></Entry>
+                <Entry Placeholder="ชื่อที่แสดง" x:Name="NameEntry" Text="{Binding Profile.Name}" TextColor="Green" Keyboard="Email"></Entry>
+                <Entry Placeholder="เบอร์โทรศัพท์" x:Name="PhoneEntry" Text="{Binding Profile.PhoneNumber}" TextColor="Green" Keyboard="Telephone"></Entry>
+                <Entry Placeholder="ยืนยันรหัสผ่าน" x:Name="PasswordEntry" Text="{Binding Profile.Password}" TextColor="Green" IsPassword="True"></Entry>
+                <Button Text="บันทึก" Command="{Binding UpdateUserCommand}"  BackgroundColor="#449D44" TextColor="White"></Button>
+            </StackLayout>
+        </Frame>
+    </ContentPage.Content>
+</ContentPage>

@@ -5,8 +5,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
              mc:Ignorable="d"
+             x:Name="ContactView"
+             Visual="Material"
              x:Class="TravelApp.Views.PlacePage"
-             Title="สถานที่ท่องเที่ยว">
+             >
     <ContentPage.BindingContext>
         <viewModels:PlaceViewModel></viewModels:PlaceViewModel>
     </ContentPage.BindingContext>
@@ -20,8 +22,7 @@
                         <ViewCell>
                             <StackLayout>
                                 <Label Text="{Binding PlaceName}"/>
-                                <Label Text="{Binding PlaceDescription}" />
-                                <Label Text="{Binding Category.CategoryName}" />
+                                <Label Text="{Binding CategoryName}" />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
@@ -29,4 +30,26 @@
             </ListView>
         </StackLayout>
     </ContentPage.Content>
+    <!--<ScrollView>
+        <ListView ItemsSource="{Binding Places}"
+                  HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Spacing="20" Padding="10" >
+                            <Frame Padding="16">
+                                <StackLayout Spacing="16">
+                                    <Label Text="Card containers hold all card elements, and their size is determined by the space those elements occupy. Card elevation is expressed by the container."
+                                           FontSize="14" />
+                                    <Button Text="เพิ่มเติม" HorizontalOptions="End" 
+                                            CommandParameter="{Binding .}"
+                                            Command="{Binding Path=BindingContext.SelectPlace, Source={x:Reference ContactView}}"/>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ScrollView>-->
 </ContentPage>

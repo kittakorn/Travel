@@ -24,6 +24,29 @@ namespace TravelApp.Services
             return places;
         }
 
+        public async Task<bool> PutUserAsync(EditProfile model)
+        {
+
+            var client = new HttpClient();
+            var json = JsonConvert.SerializeObject(model);
+            HttpContent content = new StringContent(json);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await client.PostAsync(Constant.ApiAddressAccount + "api/Account/EditProfile", content);
+            return response.IsSuccessStatusCode;
+          
+        }
+
+        public async Task<bool> PutUserAsync(ChangePassword model)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Setting.AccessToken);
+            var json = JsonConvert.SerializeObject(model);
+            HttpContent content = new StringContent(json);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await client.PostAsync(Constant.ApiAddressAccount + "api/Account/ChangePassword", content);
+            return response.IsSuccessStatusCode;
+        }
+
         public async Task<Place> GetPlaceAsync(int id)
         {
             var client = new HttpClient();
@@ -54,7 +77,25 @@ namespace TravelApp.Services
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<bool> PutCommentAsync(Comment comment)
+        {
+            var client = new HttpClient();
+            var json = JsonConvert.SerializeObject(comment);
+            HttpContent content = new StringContent(json);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await client.PutAsync(
+                Constant.ApiAddress + "api/Comments/" +comment.CommentId, content);
+            return response.IsSuccessStatusCode;
+        }
 
+        public async Task<bool> DeleteCommentAsync(int id)
+        {
+            var client = new HttpClient();
+
+            var response = await client.DeleteAsync(
+                Constant.ApiAddress + "api/Comments/" + id);
+            return response.IsSuccessStatusCode;
+        }
         public async Task<bool> LoginAsync(string email, string password)
         {
             var keyValues = new List<KeyValuePair<string, string>>

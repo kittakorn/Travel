@@ -17,7 +17,7 @@ namespace TravelApp.Models
         public string PlaceOpenDate { get; set; }
         public string PlacePhone { get; set; }
         public string PlaceDescription { get; set; }
-        public double PlaceRating { get; set; }
+        public decimal? PlaceRating { get; set; }
         public int PlaceVisitor { get; set; }
         public List<Comment> Comments { get; set; }
     }

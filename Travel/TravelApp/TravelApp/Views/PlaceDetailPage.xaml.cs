@@ -18,12 +18,13 @@ namespace TravelApp.Views
             InitializeComponent();
             var placeDetail = new PlaceDetailViewModel(id);
             BindingContext = placeDetail;
+
         }
         protected override bool OnBackButtonPressed()
         {
             var mainPage = new MainPage() as TabbedPage;
             mainPage.CurrentPage = mainPage.Children[0];
-            Application.Current.MainPage = mainPage;
+            Application.Current.MainPage = new NavigationPage(mainPage);
             return true;
         }
 

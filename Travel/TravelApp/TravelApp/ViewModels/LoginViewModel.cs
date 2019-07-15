@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows.Input;
+using Plugin.Toast;
 using TravelApp.Annotations;
 using TravelApp.Helpers;
 using TravelApp.Services;
-using TravelApp.Views;
 using Xamarin.Forms;
 
 namespace TravelApp.ViewModels
 {
     class LoginViewModel : INotifyPropertyChanged
     {
-        ApiService _apiService = new ApiService();
+        readonly ApiService _apiService = new ApiService();
 
         private string _email;
         private string _password;
@@ -29,7 +27,6 @@ namespace TravelApp.ViewModels
                 OnPropertyChanged();
             }
         }
-
         public string Password
         {
             get => _password;
@@ -41,23 +38,33 @@ namespace TravelApp.ViewModels
             }
         }
 
-
         public ICommand LoginCommand
         {
             get
             {
                 return new Command(async () =>
                 {
-                    if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
-                        await Application.Current.MainPage.DisplayAlert("แจ้งเตือน", "กรุณาณกรอกข้อมูล", "ปิด");
-                    if (await _apiService.LoginAsync(Email, Password))
-                    {
-                        var mainPage = new MainPage() as TabbedPage;
-                        mainPage.CurrentPage = mainPage.Children[1];
-                        Application.Current.MainPage = mainPage;
-                    }
+                    if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
+                        Toast.Show();
                     else
-                        await Application.Current.MainPage.DisplayAlert("แจ้งเตือน", "เข้าสู่ระบบไม่สำเร็จ", "ปิด");
+                    {
+                        try
+                        {
+                            if (await _apiService.LoginAsync(Email, Password))
+                            {
+                                Toast.Success("เข้าสู่ระบบสำเร็จ");
+                                var mainPage = new MainPage() as TabbedPage;
+                                mainPage.CurrentPage = mainPage.Children[2];
+                                Application.Current.MainPage = new NavigationPage(mainPage);
+                            }
+                            else
+                                Toast.Warning("ชื่อผู้ใช้หรือหรัสผ่านไม่ถูกต้อง");
+                        }
+                        catch
+                        {
+                            Toast.Error();
+                        }
+                    }
                 });
             }
         }

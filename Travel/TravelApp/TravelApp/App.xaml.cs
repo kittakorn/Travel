@@ -10,7 +10,8 @@ namespace TravelApp
         public App()
         {
             InitializeComponent();
-            MainPage = new MainPage();
+            HotReloader.Current.Run(this);
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()

@@ -12,5 +12,6 @@ namespace TravelApp.Models
         public string CommentDescription { get; set; }
         public string CommentUserId { get; set; }
         public int CommentPlaceId { get; set; }
+
     }
 }

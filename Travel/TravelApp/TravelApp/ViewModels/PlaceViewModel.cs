@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using TravelApp.Annotations;
 using TravelApp.Models;
@@ -33,9 +31,13 @@ namespace TravelApp.ViewModels
                 if (Equals(value, _place)) return;
                 _place = value;
                 OnPropertyChanged();
-                Current.MainPage = new NavigationPage(new MainPage());
                 Current.MainPage.Navigation.PushAsync(new PlaceTabedPage(Place.PlaceId));
             }
+        }
+
+        public async Task SelectPlace(Place place)
+        {
+            await Application.Current.MainPage.DisplayAlert(",", place.PlaceName, "2");
         }
 
         public List<Place> Places

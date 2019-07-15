@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows.Input;
 using TravelApp.Annotations;
 using TravelApp.Helpers;
 using TravelApp.Models;
 using TravelApp.Services;
-using TravelApp.Views;
 using Xamarin.Forms;
 
 namespace TravelApp.ViewModels
