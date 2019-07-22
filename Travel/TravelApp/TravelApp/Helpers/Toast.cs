@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Plugin.Toast;
+﻿using Plugin.Toast;
 
 namespace TravelApp.Helpers
 {
@@ -12,7 +9,7 @@ namespace TravelApp.Helpers
             CrossToastPopUp.Current.ShowCustomToast(message, "#449D44", "#FFFFFF");
         }
 
-        public static void Error(string message ="เกิดข้อผิดพลาด")
+        public static void Error(string message = "เกิดข้อผิดพลาด")
         {
             CrossToastPopUp.Current.ShowCustomToast(message, "#C9302C", "#FFFFFF");
         }

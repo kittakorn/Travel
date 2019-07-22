@@ -11,7 +11,8 @@ namespace TravelWeb.Models
         {
             PlaceId = place.PlaceId;
             PlaceName = place.PlaceName;
-            PlaceImage = place.PlaceImage.Split(',').ToList();
+            PlaceImages = place.PlaceImage.Split(',').ToList().Select(x => "http://ccs.kru.ac.th/cs59/cs06/WebMVC/Images/" + x).ToList();
+            PlaceImage = "http://ccs.kru.ac.th/cs59/cs06/WebMVC/Images/" + place.PlaceImage.Split(',')[0];
             CategoryName = place.Category.CategoryName;
             PlaceAddress = place.PlaceAddress;
             ProvinceName = place.Province.ProvinceName;
@@ -26,7 +27,8 @@ namespace TravelWeb.Models
         }
         public int PlaceId { get; set; }
         public string PlaceName { get; set; }
-        public List<string> PlaceImage { get; set; }
+        public List<string> PlaceImages { get; set; }
+        public string PlaceImage { get; set; }
         public string CategoryName { get; set; }
         public string PlaceAddress { get; set; }
         public string ProvinceName { get; set; }

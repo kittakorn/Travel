@@ -1,26 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
-             mc:Ignorable="d"
-             x:Class="TravelApp.Views.RegisterPage"
-             Title="สมัครสมาชิก"
-             Visual="Material">
+<ContentPage
+    x:Class="TravelApp.Views.RegisterPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
+    Title="สมัครสมาชิก"
+    mc:Ignorable="d">
+
     <ContentPage.BindingContext>
-        <viewModels:RegisterViewModel/>
+        <viewModels:RegisterViewModel />
     </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="Cancel_OnClicked" Text="ปิด" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
-        <Frame  VerticalOptions="CenterAndExpand" Margin="10" >
         <StackLayout>
-                <Entry Placeholder="อีเมล" x:Name="EmailEntry" Text="{Binding Register.Email}" TextColor="Green" Keyboard="Email"></Entry>
-                <Entry Placeholder="รหัสผ่าน" x:Name="PasswordEntry" Text="{Binding Register.Password}" IsPassword="True" TextColor="Green"></Entry>
-                <Entry Placeholder="ยืนยันรหัสผ่าน" x:Name="ConfirmPassowrdEntry" Text="{Binding Register.ConfirmPassword}" IsPassword="True" TextColor="Green"></Entry>
-                <Entry Placeholder="ชื่อที่แสดง" x:Name="NameEntry" Text="{Binding Register.Name}" TextColor="Green"></Entry>
-                <Entry Placeholder="เบอร์โทรศัพท์" x:Name="PhoneEntry" Text="{Binding Register.Phone}" TextColor="Green" Keyboard="Telephone"></Entry>
-                <Button Text="สมัครสมาชิก" Command="{Binding RegisterCommand}"  BackgroundColor="#449D44" TextColor="White"></Button>
+            <Entry Placeholder="ชื่อ" Text="{Binding Register.Name}" />
+            <Entry Placeholder="อีเมล" Text="{Binding Register.Email}" />
+            <Entry
+                IsPassword="True"
+                Placeholder="รหัสผ่าน"
+                Text="{Binding Register.Password}" />
+            <Entry
+                IsPassword="True"
+                Placeholder="ยืนยันรหัสผ่าน"
+                Text="{Binding Register.ConfirmPassword}" />
+            <Button Command="{Binding RegisterCommand}" Text="สมัครสมาชิก" />
         </StackLayout>
-        </Frame>
     </ContentPage.Content>
 </ContentPage>

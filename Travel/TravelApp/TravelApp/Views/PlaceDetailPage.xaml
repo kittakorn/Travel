@@ -1,38 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
-             mc:Ignorable="d"
-             x:Class="TravelApp.Views.PlaceDetailPage">
+<ContentPage
+    x:Class="TravelApp.Views.PlaceDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
+    Title="{Binding Title}"
+    mc:Ignorable="d">
+
     <ContentPage.BindingContext>
-        <viewModels:PlaceDetailViewModel/>
+        <viewModels:PlaceDetailViewModel />
     </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="NavigateToComment_OnClicked" IconImageSource="ic_action_comment.png" />
+        <ToolbarItem Clicked="NavigateToMap_OnClicked" IconImageSource="ic_action_local_dining.png" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout>
-                <Label Text="{Binding Place.PlaceName}"/>
-                <Label Text="{Binding Place.PlaceAddress}"/>
-                <Label Text="{Binding Place.PlaceDescription}"/>
-                <Label Text="{Binding Place.PlaceRating}"/>
-                <Label Text="{Binding Place.PlaceLatitude}"/>
-                <Label Text="{Binding Place.PlaceLongitude}"/>
-                <Label Text="{Binding Place.PlacePhone}"/>
-                <Label Text="{Binding Place.PlaceOpenDate}"/>
-                <ListView ItemsSource="{Binding Image}"
-                      HasUnevenRows="True">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout>
-                                    <Image Source="{Binding .}" WidthRequest="100" HeightRequest="100"></Image>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
-        </ScrollView>
+        <StackLayout>
+            <Label
+                HorizontalOptions="CenterAndExpand"
+                Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" />
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

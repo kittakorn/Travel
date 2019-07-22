@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TravelApp.Models;
 using TravelApp.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,22 +12,26 @@ namespace TravelApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlaceDetailPage : ContentPage
     {
-        internal PlaceDetailPage(int id)
+        private PlaceDetailViewModel viewModel;
+        public PlaceDetailPage(PlaceDetailViewModel viewModel)
         {
             InitializeComponent();
-            var placeDetail = new PlaceDetailViewModel(id);
-            BindingContext = placeDetail;
-
+            BindingContext = this.viewModel = viewModel;
         }
-        protected override bool OnBackButtonPressed()
+
+        public PlaceDetailPage()
         {
-            var mainPage = new MainPage() as TabbedPage;
-            mainPage.CurrentPage = mainPage.Children[0];
-            Application.Current.MainPage = new NavigationPage(mainPage);
-            return true;
+            InitializeComponent();
         }
 
+        async void NavigateToComment_OnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new CommentsPage(new CommentViewModel(viewModel.Place)));
+        }
 
-
+        async void NavigateToMap_OnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new MapPage());
+        }
     }
 }

@@ -1,20 +1,13 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using Plugin.Toast;
-using TravelApp.Annotations;
 using TravelApp.Helpers;
 using TravelApp.Models;
-using TravelApp.Services;
 using Xamarin.Forms;
 
 namespace TravelApp.ViewModels
 {
-    class RegisterViewModel : INotifyPropertyChanged
+    public class RegisterViewModel : BaseViewModel
     {
-        public readonly ApiService _apiService = new ApiService();
         private Register _register;
 
         public RegisterViewModel()
@@ -33,7 +26,7 @@ namespace TravelApp.ViewModels
             }
         }
 
-        public ICommand RegisterCommand
+        public Command RegisterCommand
         {
             get
             {
@@ -41,38 +34,21 @@ namespace TravelApp.ViewModels
                 {
                     try
                     {
-                        if (await _apiService.RegisterAsync(Register))
+                        if (await ApiService.RegisterAsync(Register))
                         {
-                            await Task.Delay(1000);
-                            Toast.Success("สมัครสมาชิกสำเร็จ กำลังเข้าสู่ระบบ......");
-                            if (await _apiService.LoginAsync(Register.Email, Register.Password))
-                            {
-                                var mainPage = new MainPage() as TabbedPage;
-                                mainPage.CurrentPage = mainPage.Children[2];
-                                Application.Current.MainPage = new NavigationPage(mainPage);
-                            }
-                            else Toast.Error();
+                            Toast.Success("สมัครสมาชิกสำเร็จ");
+                            MessagingCenter.Send(this, "CheckLogin");
+                            await Application.Current.MainPage.Navigation.PopModalAsync();
                         }
                         else
-                        {
-                            Toast.Show();
-                        }
+                            Toast.Warning("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        Toast.Error();
+                        Toast.Error(ex.Message);
                     }
-                    
                 });
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

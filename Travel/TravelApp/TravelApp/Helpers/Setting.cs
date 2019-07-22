@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Essentials;
+﻿using Xamarin.Essentials;
 
 namespace TravelApp.Helpers
 {
@@ -17,7 +14,5 @@ namespace TravelApp.Helpers
             get => Preferences.Get("UserId", "");
             set => Preferences.Set("UserId", value);
         }
-
-        
     }
 }

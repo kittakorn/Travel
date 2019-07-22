@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TravelApp.Models
 {
-    class ChangePassword
+    public class ChangePassword
     {
         public string OldPassword { get; set; }
 

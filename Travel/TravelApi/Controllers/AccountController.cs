@@ -169,7 +169,6 @@ namespace TravelApi.Controllers
             if (user == null)
                 return NotFound();
             user.Name = model.Name;
-            user.PhoneNumber = model.PhoneNumber;
             await UserManager.UpdateAsync(user);
             return Ok(user);
         }
@@ -285,7 +284,7 @@ namespace TravelApi.Controllers
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
-                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.Name, user.Email, user.Id, user.PhoneNumber, user.UserRole);
+                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.Name, user.Email, user.Id,  user.UserRole);
                 Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
             }
             else
@@ -356,7 +355,6 @@ namespace TravelApi.Controllers
                 JoinDate = DateTime.UtcNow,
                 Name = model.Name,
                 UserRole = "Member",
-                PhoneNumber = model.Phone
             };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);

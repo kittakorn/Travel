@@ -1,64 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
-             mc:Ignorable="d"
-             Visual="Material"
-             x:Class="TravelApp.Views.AccountPage">
+<ContentPage
+    x:Class="TravelApp.Views.AccountPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
+    Title="ข้อมูลผู้ใช้งาน"
+    mc:Ignorable="d">
 
     <ContentPage.BindingContext>
-        <viewModels:AccountViewModel/>
+        <viewModels:AccountViewModel />
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-        <Frame Margin="10">
-            <StackLayout>
-                <Grid  Margin="5,0,5,10"  IsVisible="{Binding Logout}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Label Text="อีเมล" Grid.Column="0"></Label>
-                    <Label Text="{Binding User.Email}" Grid.Column="1"></Label>
-                    <Label Text="ชื่อที่แสดง" Grid.Row="1" Grid.Column="0" ></Label>
-                    <Label Text="{Binding User.Name}" Grid.Row="1" Grid.Column="1"></Label>
-                    <Label Text="เบอร์โทรศัพท์" Grid.Row="2" Grid.Column="0" ></Label>
-                    <Label Text="{Binding User.PhoneNumber}" Grid.Row="2" Grid.Column="1"></Label>
-                    <Label Text="วันที่สมัคร" Grid.Row="3" Grid.Column="0" ></Label>
-                    <Label Text="{Binding User.JoinDate}" Grid.Row="3" Grid.Column="1"></Label>
-                    <Label Text="เข้าสู่ระบบล่าสุด" Grid.Row="4" Grid.Column="0" ></Label>
-                    <Label Text="{Binding User.LoginDate}" Grid.Row="4" Grid.Column="1"></Label>
-                </Grid>
-                <Grid  Margin="5,0,5,0"  IsVisible="{Binding Logout}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Button Text="แก้ไขข้อมูล" Grid.Column="0" BackgroundColor="#5bc0de" Command="{Binding EditProfileViewCommand}"></Button>
-                    <Button Text="เปลี่ยนรหัสผ่าน" Grid.Column="1" BackgroundColor="#d58512" Command="{Binding ChangePasswordViewCommand}"></Button>
-                </Grid>
-                <Button Text="ออกจากระบบ"  Margin="5,0,5,0"   BackgroundColor="#C9302C" IsVisible="{Binding Logout}" Command="{Binding LogoutCommand}"></Button>
-                <StackLayout  VerticalOptions="CenterAndExpand" IsVisible="{Binding Login}">
+        <StackLayout>
+            <StackLayout IsVisible="{Binding ProfileVisible}">
+                <Label Text="อีเมล" />
+                <Label Text="{Binding User.Email}" />
+                <Label Text="ชื่อที่แสดง" />
+                <Label Text="{Binding User.Name}" />
+                <Label Text="วันที่สมัคร" />
+                <Label Text="{Binding User.JoinDate}" />
+                <Label Text="เข้าสู่ระบบล่าสุด" />
+                <Label Text="{Binding User.LoginDate}" />
+                <Button Clicked="NavigateToUpdate_OnClicked" Text="เปลี่ยนชื่อ" />
+                <Button Clicked="NavigateToChangePassword_OnClicked" Text="เปลี่ยนรหัสผ่าน" />
+                <Button Clicked="Logout_OnClicked" Text="ออกจากระบบ" />
 
-                    <Button Text="เข้าสู่ระบบ"  Command="{Binding LoginViewCommand}" BackgroundColor="#5bc0de" ></Button>
-                    <Label Text="หรือ" HorizontalOptions="CenterAndExpand"></Label>
-                    <Button Text="สมัครสมาชิก"  Command="{Binding RegisterViewCommand}" BackgroundColor="#dddddd" ></Button>
-           </StackLayout>
+            </StackLayout>
+            <StackLayout IsVisible="{Binding AccountVisible}">
+                <Button Clicked="NavigateToLogin_OnClicked" Text="เข้าสู่ระบบ" />
+                <Button Clicked="NavigateToRegister_OnClicked" Text="สมัครสมาชิก" />
+            </StackLayout>
 
-</StackLayout>
-        </Frame>
+        </StackLayout>
     </ContentPage.Content>
-
 </ContentPage>

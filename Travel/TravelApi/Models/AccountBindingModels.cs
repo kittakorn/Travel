@@ -20,8 +20,6 @@ namespace TravelApi.Models
         [Required]
         public string Name { get; set; }
         [Required]
-        public string PhoneNumber { get; set; }
-        [Required]
         public string Password { get; set; }
     }
 
@@ -62,7 +60,6 @@ namespace TravelApi.Models
         public string ConfirmPassword { get; set; }
 
         public string Name { get; set; }
-        public string Phone { get; set; }
     }
 
     public class RegisterExternalBindingModel

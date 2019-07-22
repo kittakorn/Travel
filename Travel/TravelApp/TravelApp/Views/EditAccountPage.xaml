@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TravelApp.Views.EditAccountPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
+    Title="เปลี่ยนชื่อ"
+    mc:Ignorable="d">
+
+    <ContentPage.BindingContext>
+        <viewModels:EditAccountViewModel />
+    </ContentPage.BindingContext>
+
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry Placeholder="ชื่อที่แสดง" Text="{Binding Profile.Name}" />
+
+            <Entry
+                IsPassword="True"
+                Placeholder="ยืนยันรหัสผ่าน"
+                Text="{Binding Profile.Password}" />
+            <Button Command="{Binding UpdateUserCommand}" Text="บันทึก" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

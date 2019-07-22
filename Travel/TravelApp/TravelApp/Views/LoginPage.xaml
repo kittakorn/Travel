@@ -1,26 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
-             mc:Ignorable="d"
-             x:Class="TravelApp.Views.LoginPage"
-             Title="เข้าสุ่ระบบ"
-             Visual="Material">
+<ContentPage
+    x:Class="TravelApp.Views.LoginPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
+    Title="เช้าสู่ระบบ"
+    mc:Ignorable="d">
+
     <ContentPage.BindingContext>
-        <viewModels:LoginViewModel/>
+        <viewModels:LoginViewModel />
     </ContentPage.BindingContext>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="Cancel_OnClicked" Text="ปิด" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
-        <Frame  VerticalOptions="CenterAndExpand" Margin="10" >
-            <StackLayout>
-                <Entry Placeholder="อีเมล" x:Name="EmailEntry" Keyboard="Email" Text="{Binding Email}" TextColor="Green"></Entry>
-                <Entry Placeholder="รหัสผ่าน" x:Name="PasswordEntry" Text="{Binding Password}" IsPassword="True" TextColor="Green"></Entry>
-                <Button Text="เข้าสู่ระบบ" Command="{Binding LoginCommand}" BackgroundColor="#449D44" TextColor="White"></Button>
+        <StackLayout>
+            <Entry Placeholder="อีเมล" Text="{Binding Login.Email}" />
+            <Entry Placeholder="รหัสผ่าน" Text="{Binding Login.Password}" />
+            <Button Command="{Binding LoginCommand}" Text="เข้าสู่ระบบ" />
         </StackLayout>
-        </Frame>
     </ContentPage.Content>
-
-
 </ContentPage>

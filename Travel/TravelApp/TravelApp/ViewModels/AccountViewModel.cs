@@ -1,61 +1,31 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using TravelApp.Annotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Sockets;
+using System.Text;
 using TravelApp.Helpers;
 using TravelApp.Models;
-using TravelApp.Services;
-using TravelApp.Views;
-using Xamarin.Essentials;
 using Xamarin.Forms;
-using static Xamarin.Forms.Application;
 
 namespace TravelApp.ViewModels
 {
-    class AccountViewModel : INotifyPropertyChanged
+    public class AccountViewModel : BaseViewModel
     {
-        private readonly ApiService _apiService = new ApiService();
+        private bool _profileVisible;
+        private bool _accountVisible;
+        private User _user;
+
         public AccountViewModel()
         {
-            if (string.IsNullOrEmpty(Setting.AccessToken))
-            {
-                Login = true;
-                Logout = false;
-            }
-            else
-            {
-                Login = false;
-                Logout = true;
-                GetUserCommand.Execute(null);
-            }
+            CheckLogin();
+            MessagingCenter.Subscribe<LoginViewModel>(this, "CheckLogin",
+                (sender) => CheckLogin());
+            MessagingCenter.Subscribe<RegisterViewModel>(this, "CheckLogin",
+                (sender) => CheckLogin());
+            MessagingCenter.Subscribe<EditAccountViewModel>(this, "UpdateAccount",
+                (sender) => LoadUserCommand.Execute(null));
         }
 
-
-        private bool _login;
-        private bool _logout;
-        private AspNetUser _user;
-
-        public bool Logout
-        {
-            get => _logout;
-            set
-            {
-                if (value == _logout) return;
-                _logout = value;
-                OnPropertyChanged();
-            }
-        }
-        public bool Login
-        {
-            get => _login;
-            set
-            {
-                if (value == _login) return;
-                _login = value;
-                OnPropertyChanged();
-            }
-        }
-        public AspNetUser User
+        public User User
         {
             get => _user;
             set
@@ -66,86 +36,59 @@ namespace TravelApp.ViewModels
             }
         }
 
-        public ICommand LogoutCommand
-        {
-            get
-            {
-                return new Command(() =>
-                {
-                    Preferences.Clear();
-                    Login = true;
-                    Logout = false;
-                    var mainPage = new MainPage() as TabbedPage;
-                    mainPage.CurrentPage = mainPage.Children[2];
-                    Current.MainPage = new NavigationPage(mainPage);
-                });
-            }
-        }
-
-        public ICommand LoginViewCommand
-        {
-            get
-            {
-                return new Command(() =>
-                {
-                    Current.MainPage.Navigation.PushAsync(new LoginPage());
-                });
-            }
-        }
-
-        public ICommand ChangePasswordViewCommand
-        {
-            get
-            {
-                return new Command(() =>
-                {
-                    Current.MainPage.Navigation.PushAsync(new ChangePasswordPage());
-                });
-            }
-        }
-
-        public ICommand EditProfileViewCommand
-        {
-            get
-            {
-                return new Command(() =>
-                {
-                    Current.MainPage.Navigation.PushAsync(new EditProfilePage(User));
-                });
-            }
-        }
-
-        public ICommand GetUserCommand
+        public Command LoadUserCommand
         {
             get
             {
                 return new Command(async () =>
                 {
-                    User = new AspNetUser();
-                    User = await _apiService.GetUserAsync();
+                    try
+                    {
+                        User = await ApiService.GetUserAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        Toast.Error(e.Message);
+                    }
                 });
             }
         }
 
-        public ICommand RegisterViewCommand
+        public bool ProfileVisible
         {
-            get
+            get => _profileVisible;
+            set
             {
-                return new Command(() =>
-                {
-                    Current.MainPage.Navigation.PushAsync(new RegisterPage());
-                });
+                if (value == _profileVisible) return;
+                _profileVisible = value;
+                OnPropertyChanged();
             }
         }
 
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public bool AccountVisible
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get => _accountVisible;
+            set
+            {
+                if (value == _accountVisible) return;
+                _accountVisible = value;
+                OnPropertyChanged();
+            }
         }
 
+        public void CheckLogin()
+        {
+            if (string.IsNullOrEmpty(Setting.AccessToken))
+            {
+                ProfileVisible = false;
+                AccountVisible = true;
+            }
+            else
+            {
+                ProfileVisible = true;
+                AccountVisible = false;
+                LoadUserCommand.Execute(null);
+            }
+        }
     }
 }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Net;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -13,29 +9,19 @@ using TravelApp.Models;
 
 namespace TravelApp.Services
 {
-    class ApiService
+    public class ApiService
     {
-        
-        public async Task<List<Place>> GetPlaceAsync()
-        {
-            var client = new HttpClient();
-            var json = await client.GetStringAsync(Constant.ApiAddress + "api/Places");
-            var places = JsonConvert.DeserializeObject<List<Place>>(json);
-            return places;
-        }
 
         public async Task<bool> PutUserAsync(EditProfile model)
         {
-
             var client = new HttpClient();
             var json = JsonConvert.SerializeObject(model);
             HttpContent content = new StringContent(json);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             var response = await client.PostAsync(Constant.ApiAddressAccount + "api/Account/EditProfile", content);
             return response.IsSuccessStatusCode;
-          
-        }
 
+        }
         public async Task<bool> PutUserAsync(ChangePassword model)
         {
             var client = new HttpClient();
@@ -46,46 +32,21 @@ namespace TravelApp.Services
             var response = await client.PostAsync(Constant.ApiAddressAccount + "api/Account/ChangePassword", content);
             return response.IsSuccessStatusCode;
         }
-
-        public async Task<Place> GetPlaceAsync(int id)
-        {
-            var client = new HttpClient();
-            var json = await client.GetStringAsync(Constant.ApiAddress + "api/Places/" + id);
-            var place = JsonConvert.DeserializeObject<Place>(json);
-            return place;
-        }
-
-       
-        public async Task<AspNetUser> GetUserAsync()
+        public async Task<User> GetUserAsync()
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Setting.AccessToken);
             var json = await client.GetStringAsync(Constant.ApiAddressAccount + "api/Account/GetUser");
-            var user = JsonConvert.DeserializeObject<AspNetUser>(json);
+            var user = JsonConvert.DeserializeObject<User>(json);
             return user;
         }
 
-
-
-        public async Task<bool> PostCommentAsync(Comment comment)
+        public async Task<List<Place>> GetPlaceAsync()
         {
             var client = new HttpClient();
-            var json = JsonConvert.SerializeObject(comment);
-            HttpContent content = new StringContent(json);
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var response = await client.PostAsync(Constant.ApiAddress + "api/Comments", content);
-            return response.IsSuccessStatusCode;
-        }
-
-        public async Task<bool> PutCommentAsync(Comment comment)
-        {
-            var client = new HttpClient();
-            var json = JsonConvert.SerializeObject(comment);
-            HttpContent content = new StringContent(json);
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var response = await client.PutAsync(
-                Constant.ApiAddress + "api/Comments/" +comment.CommentId, content);
-            return response.IsSuccessStatusCode;
+            var json = await client.GetStringAsync(Constant.ApiAddress + "api/Places");
+            var places = JsonConvert.DeserializeObject<List<Place>>(json);
+            return places;
         }
 
         public async Task<bool> DeleteCommentAsync(int id)
@@ -96,12 +57,33 @@ namespace TravelApp.Services
                 Constant.ApiAddress + "api/Comments/" + id);
             return response.IsSuccessStatusCode;
         }
-        public async Task<bool> LoginAsync(string email, string password)
+
+        public async Task<bool> PutCommentAsync(Comment comment)
+        {
+            var client = new HttpClient();
+            var json = JsonConvert.SerializeObject(comment);
+            HttpContent content = new StringContent(json);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await client.PutAsync(
+                Constant.ApiAddress + "api/Comments/" + comment.CommentId, content);
+            return response.IsSuccessStatusCode;
+        }
+
+
+        public async Task<Place> GetPlaceAsync(int id)
+        {
+            var client = new HttpClient();
+            var json = await client.GetStringAsync(Constant.ApiAddress + "api/Places/" + id);
+            var place = JsonConvert.DeserializeObject<Place>(json);
+            return place;
+        }
+
+        public async Task<bool> LoginAsync(Login login)
         {
             var keyValues = new List<KeyValuePair<string, string>>
             {
-                new KeyValuePair<string, string>("username", email),
-                new KeyValuePair<string, string>("password", password),
+                new KeyValuePair<string, string>("username", login.Email),
+                new KeyValuePair<string, string>("password", login.Password),
                 new KeyValuePair<string, string>("grant_type", "password")
             };
 
@@ -131,6 +113,16 @@ namespace TravelApp.Services
             httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             var response = await client.PostAsync(
                 Constant.ApiAddressAccount + "api/Account/Register", httpContent);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> PostCommentAsync(Comment comment)
+        {
+            var client = new HttpClient();
+            var json = JsonConvert.SerializeObject(comment);
+            HttpContent content = new StringContent(json);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await client.PostAsync(Constant.ApiAddress + "api/Comments", content);
             return response.IsSuccessStatusCode;
         }
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="TravelApp.AppShell"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:local="clr-namespace:TravelApp.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="TravelApp"
+    mc:Ignorable="d">
+
+    <TabBar>
+        <Tab Title="สถานที่ท่องเที่ยว" Icon="ic_action_filter_hdr.png">
+            <ShellContent ContentTemplate="{DataTemplate local:PlacesPage}" />
+        </Tab>
+        <Tab Title="ข้อมูลผู้ใช้งาน" Icon="ic_action_account_circle.png">
+            <ShellContent ContentTemplate="{DataTemplate local:AccountPage}" />
+        </Tab>
+    </TabBar>
+
+</Shell>

@@ -4,11 +4,12 @@ using System.Text;
 
 namespace TravelApp.Models
 {
-    class Place
+    public class Place
     {
         public int PlaceId { get; set; }
         public string PlaceName { get; set; }
-        public List<string> PlaceImage { get; set; }
+        public List<string> PlaceImages { get; set; }
+        public string PlaceImage { get; set; }
         public string CategoryName { get; set; }
         public string PlaceAddress { get; set; }
         public string ProvinceName { get; set; }

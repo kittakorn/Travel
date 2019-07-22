@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TravelApp.Models
 {
-    class Comment
+    public class Comment
     {
         public int CommentId { get; set; }
         public string Name { get; set; }
@@ -12,6 +12,5 @@ namespace TravelApp.Models
         public string CommentDescription { get; set; }
         public string CommentUserId { get; set; }
         public int CommentPlaceId { get; set; }
-
     }
 }

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TravelApp.Views.CommentDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
+    Title="แก้ไขความคิดเห็น"
+    mc:Ignorable="d">
+
+    <ContentPage.BindingContext>
+        <viewModels:CommentDetailViewModel />
+    </ContentPage.BindingContext>
+
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="Cancel_OnClicked" Text="ปิด" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry Text="{Binding Comment.CommentDescription}" />
+            <Button Command="{Binding UpdateCommentCommand}" Text="บันทึก" />
+            <Button Command="{Binding DeleteCommentCommand}" Text="ลบ" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

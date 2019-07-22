@@ -1,73 +1,52 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using TravelApp.Annotations;
+using TravelApp.Helpers;
 using TravelApp.Models;
-using TravelApp.Services;
-using TravelApp.Views;
 using Xamarin.Forms;
-using static Xamarin.Forms.Application;
 
 namespace TravelApp.ViewModels
 {
-    class PlaceViewModel : INotifyPropertyChanged
+    public class PlaceViewModel : BaseViewModel
     {
         public PlaceViewModel()
         {
-            GetPlaceCommand.Execute(null);    
+            Places = new ObservableCollection<Place>();
         }
 
-        private readonly ApiService _apiService = new ApiService();
-        private List<Place> _places;
-        private Place _place;
+        public ObservableCollection<Place> Places { get; set; }
 
-        public Place Place
-        {
-            get => _place;
-            set
-            {
-                if (Equals(value, _place)) return;
-                _place = value;
-                OnPropertyChanged();
-                Current.MainPage.Navigation.PushAsync(new PlaceTabedPage(Place.PlaceId));
-            }
-        }
-
-        public async Task SelectPlace(Place place)
-        {
-            await Application.Current.MainPage.DisplayAlert(",", place.PlaceName, "2");
-        }
-
-        public List<Place> Places
-        {
-            get => _places;
-            set
-            {
-                if (Equals(value, _places)) return;
-                _places = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ICommand GetPlaceCommand
+        public Command LoadPlaceCommand
         {
             get
             {
                 return new Command(async () =>
                 {
-                    Places = await _apiService.GetPlaceAsync();
+                    if (IsBusy)
+                        return;
+                    IsBusy = true;
+
+                    try
+                    {
+                        Places.Clear();
+                        var places = await ApiService.GetPlaceAsync();
+                        foreach (var place in places)
+                        {
+                            Places.Add(place);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Toast.Error(ex.Message);
+                    }
+                    finally
+                    {
+                        IsBusy = false;
+                    }
                 });
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

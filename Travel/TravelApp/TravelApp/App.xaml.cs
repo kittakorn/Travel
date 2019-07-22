@@ -1,17 +1,19 @@
 ﻿using System;
-using TravelApp.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using TravelApp.Services;
+using TravelApp.Views;
 
 namespace TravelApp
 {
     public partial class App : Application
     {
+
         public App()
         {
             InitializeComponent();
-            HotReloader.Current.Run(this);
-            MainPage = new NavigationPage(new MainPage());
+
+            MainPage = new AppShell();
         }
 
         protected override void OnStart()

@@ -1,80 +1,59 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using Plugin.Toast;
-using TravelApp.Annotations;
+using System.Collections.Generic;
+using System.Text;
 using TravelApp.Helpers;
-using TravelApp.Services;
+using TravelApp.Models;
 using Xamarin.Forms;
 
 namespace TravelApp.ViewModels
 {
-    class LoginViewModel : INotifyPropertyChanged
+    public class LoginViewModel : BaseViewModel
     {
-        readonly ApiService _apiService = new ApiService();
+        private Login _login;
 
-        private string _email;
-        private string _password;
-
-        public string Email
+        public LoginViewModel()
         {
-            get => _email;
-            set
-            {
-                if (value == _email) return;
-                _email = value;
-                OnPropertyChanged();
-            }
+            Login = new Login();
         }
-        public string Password
+
+        public Login Login
         {
-            get => _password;
+            get => _login;
             set
             {
-                if (value == _password) return;
-                _password = value;
+                if (Equals(value, _login)) return;
+                _login = value;
                 OnPropertyChanged();
             }
         }
 
-        public ICommand LoginCommand
+        public Command LoginCommand
         {
             get
             {
                 return new Command(async () =>
                 {
-                    if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
-                        Toast.Show();
-                    else
+                    try
                     {
-                        try
+                        if (await ApiService.LoginAsync(Login))
                         {
-                            if (await _apiService.LoginAsync(Email, Password))
-                            {
-                                Toast.Success("เข้าสู่ระบบสำเร็จ");
-                                var mainPage = new MainPage() as TabbedPage;
-                                mainPage.CurrentPage = mainPage.Children[2];
-                                Application.Current.MainPage = new NavigationPage(mainPage);
-                            }
-                            else
-                                Toast.Warning("ชื่อผู้ใช้หรือหรัสผ่านไม่ถูกต้อง");
+                            Toast.Success("เข้าสู่ระบบสำเร็จ");
+                            MessagingCenter.Send(this, "CheckLogin");
+                            await Application.Current.MainPage.Navigation.PopModalAsync();
                         }
-                        catch
-                        {
-                            Toast.Error();
-                        }
+                        else
+                            Toast.Warning("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
+                    }
+                    catch (Exception ex)
+                    {
+                        Toast.Error(ex.Message);
+                    }
+                    finally
+                    {
+                        IsBusy = false;
                     }
                 });
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
