@@ -8,13 +8,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="TravelApp"
     mc:Ignorable="d">
-
     <TabBar>
         <Tab Title="สถานที่ท่องเที่ยว" Icon="ic_action_filter_hdr.png">
             <ShellContent ContentTemplate="{DataTemplate local:PlacesPage}" />
         </Tab>
         <Tab Title="ข้อมูลผู้ใช้งาน" Icon="ic_action_account_circle.png">
-            <ShellContent ContentTemplate="{DataTemplate local:AccountPage}" />
+            <ShellContent ContentTemplate="{DataTemplate local:AccountPage}" Route="place" />
         </Tab>
     </TabBar>
 

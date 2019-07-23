@@ -1,18 +1,53 @@
-﻿using TravelApp.Models;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using TravelApp.Helpers;
+using TravelApp.Models;
+using Xamarin.Forms;
 
 namespace TravelApp.ViewModels
 {
+    [QueryProperty("PlaceName", "name")]
     public class PlaceDetailViewModel : BaseViewModel
     {
-        public PlaceDetailViewModel() { }
+       
+        private Place _place;
+        private string _placeName;
 
-        public PlaceDetailViewModel(Place place)
+        public string PlaceName
         {
-            Title = place?.PlaceName;
-            Place = place;
+            get => _placeName;
+            set
+            {
+                if (value == _placeName) return;
+                _placeName = Uri.UnescapeDataString(value);
+                OnPropertyChanged();
+                LoadPlaceCommand.Execute(null);
+            }
+        }
+        public Place Place
+        {
+            get => _place;
+            set
+            {
+                if (Equals(value, _place)) return;
+                _place = value;
+                OnPropertyChanged();
+            }
         }
 
-        public Place Place { get; set; }
-        
+        public Command LoadPlaceCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    var placelist = await ApiService.GetPlaceAsync();
+                    Place = placelist.FirstOrDefault(x => x.PlaceName == Uri.UnescapeDataString(PlaceName));
+                    Title = Place?.PlaceName;
+                });
+            }
+        }
+
     }
 }

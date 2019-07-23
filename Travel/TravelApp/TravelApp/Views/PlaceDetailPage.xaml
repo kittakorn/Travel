@@ -9,10 +9,6 @@
     Title="{Binding Title}"
     mc:Ignorable="d">
 
-    <ContentPage.BindingContext>
-        <viewModels:PlaceDetailViewModel />
-    </ContentPage.BindingContext>
-
     <ContentPage.ToolbarItems>
         <ToolbarItem Clicked="NavigateToComment_OnClicked" IconImageSource="ic_action_comment.png" />
         <ToolbarItem Clicked="NavigateToMap_OnClicked" IconImageSource="ic_action_local_dining.png" />

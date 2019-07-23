@@ -26,8 +26,7 @@ namespace TravelApp.Views
             var place = (Place) e.SelectedItem;
             if (place == null)
                 return;
-
-            await Navigation.PushAsync(new PlaceDetailPage(new PlaceDetailViewModel(place)));
+            await Shell.Current.GoToAsync($"placedetail?name={place.PlaceName}");
 
             PlacesListView.SelectedItem = null;
         }

@@ -13,15 +13,10 @@ namespace TravelApp.Views
     public partial class PlaceDetailPage : ContentPage
     {
         private PlaceDetailViewModel viewModel;
-        public PlaceDetailPage(PlaceDetailViewModel viewModel)
-        {
-            InitializeComponent();
-            BindingContext = this.viewModel = viewModel;
-        }
-
         public PlaceDetailPage()
         {
             InitializeComponent();
+            BindingContext = viewModel = new PlaceDetailViewModel();
         }
 
         async void NavigateToComment_OnClicked(object sender, EventArgs e)

@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:helpers="clr-namespace:TravelApp.Helpers;assembly=TravelApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
     Title="สถาณที่ท่องเที่ยว"
@@ -12,7 +13,31 @@
     <ContentPage.BindingContext>
         <viewModels:PlaceViewModel />
     </ContentPage.BindingContext>
+    <Shell.SearchHandler>
 
+        <helpers:PlaceSearchHandler Placeholder="ค้นหาสถานที่" ShowsResults="true">
+            <helpers:PlaceSearchHandler.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.15*" />
+                            <ColumnDefinition Width="0.85*" />
+                        </Grid.ColumnDefinitions>
+                        <Image
+                            Aspect="AspectFill"
+                            HeightRequest="40"
+                            Source="{Binding PlaceImage}"
+                            WidthRequest="40" />
+                        <Label
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            Text="{Binding PlaceName}" />
+                    </Grid>
+                </DataTemplate>
+            </helpers:PlaceSearchHandler.ItemTemplate>
+        </helpers:PlaceSearchHandler>
+
+    </Shell.SearchHandler>
     <ContentPage.Content>
         <StackLayout>
             <ListView
