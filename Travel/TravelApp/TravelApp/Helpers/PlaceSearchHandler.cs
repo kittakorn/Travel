@@ -22,7 +22,9 @@ namespace TravelApp.Helpers
             else
             {
                 Places = await _apiService.GetPlaceAsync();
-                    ItemsSource = Places.Where(x => x.PlaceName.ToLower().Contains(newValue)).ToList();
+                ItemsSource = Places.Where(x => x.PlaceName.Contains(newValue) ||
+                                                x.CategoryName.Contains(newValue) ||
+                                                x.ProvinceName.Contains(newValue)).ToList();
             }
         }
 
@@ -34,16 +36,5 @@ namespace TravelApp.Helpers
             await Shell.Current.GoToAsync($"placedetail?name={((Place)item).PlaceName}");
         }
 
-        public Command LoadPlaceCommand
-        {
-            get
-            {
-                return new Command(async () =>
-                {
-
-                    var placelist = await _apiService.GetPlaceAsync();
-                });
-            }
-        }
     }
 }

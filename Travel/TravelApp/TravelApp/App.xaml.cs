@@ -12,7 +12,7 @@ namespace TravelApp
         public App()
         {
             InitializeComponent();
-
+            HotReloader.Current.Run(this);
             MainPage = new AppShell();
         }
 

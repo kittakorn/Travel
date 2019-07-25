@@ -49,12 +49,50 @@
                 ItemSelected="OnPlaceSelected"
                 ItemsSource="{Binding Places}"
                 RefreshCommand="{Binding LoadPlaceCommand}"
+                SeparatorVisibility="None"
                 VerticalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Padding="10">
-                                <Label LineBreakMode="NoWrap" Text="{Binding PlaceName}" />
+                            <StackLayout>
+                                <Grid Padding="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image
+                                        Grid.RowSpan="4"
+                                        Aspect="AspectFill"
+                                        HeightRequest="120"
+                                        Source="{Binding PlaceImage}"
+                                        WidthRequest="120" />
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        FontAttributes="Bold"
+                                        FontSize="18"
+                                        Text="{Binding PlaceName}" />
+                                    
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        LineHeight="100"
+                                        Text="{Binding CategoryName}" />
+                                    <Label
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Text="{Binding PlaceRating}" />
+                                    <Label
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        Text="{Binding PlaceVisitor}" />
+                                </Grid>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

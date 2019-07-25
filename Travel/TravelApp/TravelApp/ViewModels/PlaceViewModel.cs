@@ -14,6 +14,7 @@ namespace TravelApp.ViewModels
         public PlaceViewModel()
         {
             Places = new ObservableCollection<Place>();
+            LoadPlaceCommand.Execute(null);
         }
 
         public ObservableCollection<Place> Places { get; set; }
