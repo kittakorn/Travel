@@ -4,22 +4,124 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
     Title="{Binding Title}"
     mc:Ignorable="d">
 
+    <ContentPage.BindingContext>
+        <viewModels:PlaceDetailViewModel />
+    </ContentPage.BindingContext>
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Clicked="NavigateToComment_OnClicked" IconImageSource="ic_action_comment.png" />
         <ToolbarItem Clicked="NavigateToMap_OnClicked" IconImageSource="ic_action_local_dining.png" />
     </ContentPage.ToolbarItems>
-
     <ContentPage.Content>
-        <StackLayout>
-            <Label
-                HorizontalOptions="CenterAndExpand"
-                Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView>
+            <StackLayout Margin="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="20" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Rating" />
+                    <Label
+                        Grid.Column="1"
+                        FontSize="18"
+                        Text="{Binding Place.PlaceRating}" />
+                    <Label
+                        Grid.Column="2"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="ผู้เข้าชม" />
+                    <Label
+                        Grid.Column="3"
+                        FontSize="18"
+                        Text="{Binding Place.PlaceVisitor}" />
+                </Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="ประเภท" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        FontSize="18"
+                        Text="{Binding Place.CategoryName}" />
+                </Grid>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    Text="รายละเอียด" />
+                <Label FontSize="18" Text="{Binding Place.PlaceDescription}" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="ที่อยู่" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        FontSize="18"
+                        Text="{Binding Place.PlaceAddress}" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="วันเปิดทำการ" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontSize="18"
+                        Text="{Binding Place.PlaceOpenDate}" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="เบอร์โทรศัพท์" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        FontSize="18"
+                        Text="{Binding Place.PlacePhone}" />
+                </Grid>
+                <ContentView Content="{Binding Map}" HeightRequest="300" />
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
+
 </ContentPage>

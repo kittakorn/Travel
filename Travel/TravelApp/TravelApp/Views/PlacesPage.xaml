@@ -39,7 +39,7 @@
 
     </Shell.SearchHandler>
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="5">
             <ListView
                 x:Name="PlacesListView"
                 CachingStrategy="RecycleElement"
@@ -78,7 +78,7 @@
                                         FontAttributes="Bold"
                                         FontSize="18"
                                         Text="{Binding PlaceName}" />
-                                    
+
                                     <Label
                                         Grid.Row="1"
                                         Grid.Column="1"

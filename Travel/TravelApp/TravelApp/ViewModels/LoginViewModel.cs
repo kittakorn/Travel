@@ -38,6 +38,7 @@ namespace TravelApp.ViewModels
                         if (await ApiService.LoginAsync(Login))
                         {
                             Toast.Success("เข้าสู่ระบบสำเร็จ");
+                            MessagingCenter.Send(this, "UpdateComment");
                             MessagingCenter.Send(this, "CheckLogin");
                             await Application.Current.MainPage.Navigation.PopModalAsync();
                         }

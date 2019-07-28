@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using TravelApp.Helpers;
 using TravelApp.Models;
+using TravelApp.Views;
 using Xamarin.Forms;
 
 namespace TravelApp.ViewModels
@@ -26,6 +27,15 @@ namespace TravelApp.ViewModels
                 (sender) =>
                 {
                     LoadCommentCommand.Execute(null);
+                    Comment = new Comment
+                    {
+                        CommentUserId = Setting.UserId,
+                        CommentPlaceId = place.PlaceId
+                    };
+                });
+            MessagingCenter.Subscribe<LoginViewModel>(this, "UpdateComment",
+                (sender) =>
+                {
                     Comment = new Comment
                     {
                         CommentUserId = Setting.UserId,
@@ -89,7 +99,12 @@ namespace TravelApp.ViewModels
                 {
                     try
                     {
-                        if (await ApiService.PostCommentAsync(Comment))
+                        if (string.IsNullOrEmpty(Setting.UserId))
+                        {
+                            Toast.Warning("กรุณาเข้าสู่ระบบก่อนแสดงความคิดเห็น");
+                            await Application.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
+                        }
+                        else if (await ApiService.PostCommentAsync(Comment))
                         {
                             Toast.Success("แสดงความคิดเห็นสำเร็จ");
                             LoadCommentCommand.Execute(null);

@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
-using TravelApp.Helpers;
 using TravelApp.Models;
+using TravelApp.Services;
 using Xamarin.Forms;
+using Xamarin.Forms.Maps;
+using Distance = Xamarin.Forms.Maps.Distance;
 
 namespace TravelApp.ViewModels
 {
     [QueryProperty("PlaceName", "name")]
     public class PlaceDetailViewModel : BaseViewModel
     {
-       
+        private Map _map;
+
         private Place _place;
         private string _placeName;
 
@@ -25,6 +27,7 @@ namespace TravelApp.ViewModels
                 LoadPlaceCommand.Execute(null);
             }
         }
+
         public Place Place
         {
             get => _place;
@@ -36,6 +39,18 @@ namespace TravelApp.ViewModels
             }
         }
 
+        public Map Map
+        {
+            get => _map;
+            set
+            {
+                if (Equals(value, _map)) return;
+                _map = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public Command LoadPlaceCommand
         {
             get
@@ -45,9 +60,33 @@ namespace TravelApp.ViewModels
                     var placelist = await ApiService.GetPlaceAsync();
                     Place = placelist.FirstOrDefault(x => x.PlaceName == Uri.UnescapeDataString(PlaceName));
                     Title = Place?.PlaceName;
+                    Place.PlaceDescription = "      " + Place.PlaceDescription;
+                    SetCustomMap();
                 });
             }
         }
 
+        public void SetCustomMap()
+        {
+            Map = new Map(MapSpan.FromCenterAndRadius(
+                new Position(
+                    Convert.ToDouble(Place.PlaceLatitude),
+                    Convert.ToDouble(Place.PlaceLongitude)),
+                Distance.FromMiles(1)))
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                Pins =
+                {
+                    new Pin
+                    {
+                        Type = PinType.Place,
+                        Position = new Position(Convert.ToDouble(Place.PlaceLatitude),
+                            Convert.ToDouble(Place.PlaceLongitude)),
+                        Label = Place.PlaceName,
+                        Address = Place.PlaceAddress
+                    }
+                }
+            };
+        }
     }
 }

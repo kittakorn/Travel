@@ -6,12 +6,12 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TravelApp.Helpers;
 using TravelApp.Models;
+using Xamarin.Forms.Maps;
 
 namespace TravelApp.Services
 {
     public class ApiService
     {
-
         public async Task<bool> PutUserAsync(EditProfile model)
         {
             var client = new HttpClient();
@@ -20,8 +20,8 @@ namespace TravelApp.Services
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             var response = await client.PostAsync(Constant.ApiAddressAccount + "api/Account/EditProfile", content);
             return response.IsSuccessStatusCode;
-
         }
+
         public async Task<bool> PutUserAsync(ChangePassword model)
         {
             var client = new HttpClient();
@@ -32,6 +32,7 @@ namespace TravelApp.Services
             var response = await client.PostAsync(Constant.ApiAddressAccount + "api/Account/ChangePassword", content);
             return response.IsSuccessStatusCode;
         }
+
         public async Task<User> GetUserAsync()
         {
             var client = new HttpClient();
@@ -125,6 +126,5 @@ namespace TravelApp.Services
             var response = await client.PostAsync(Constant.ApiAddress + "api/Comments", content);
             return response.IsSuccessStatusCode;
         }
-
     }
 }
