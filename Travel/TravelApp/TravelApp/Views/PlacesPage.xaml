@@ -3,11 +3,13 @@
     x:Class="TravelApp.Views.PlacesPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControls="clr-namespace:TravelApp.CustomControls;assembly=TravelApp"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:helpers="clr-namespace:TravelApp.Helpers;assembly=TravelApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
     Title="สถาณที่ท่องเที่ยว"
+    Visual="Material"
     mc:Ignorable="d">
 
     <ContentPage.BindingContext>
@@ -15,23 +17,35 @@
     </ContentPage.BindingContext>
     <Shell.SearchHandler>
 
-        <helpers:PlaceSearchHandler Placeholder="ค้นหาสถานที่" ShowsResults="true">
+        <helpers:PlaceSearchHandler Placeholder="ชื่อสถานที่ ประเภท หรือจังหวัด" ShowsResults="true">
             <helpers:PlaceSearchHandler.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="10">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.15*" />
-                            <ColumnDefinition Width="0.85*" />
+                            <ColumnDefinition Width="0.20*" />
+                            <ColumnDefinition Width="0.80*" />
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
                         <Image
+                            Grid.RowSpan="2"
                             Aspect="AspectFill"
                             HeightRequest="40"
                             Source="{Binding PlaceImage}"
                             WidthRequest="40" />
                         <Label
+                            Grid.Row="0"
                             Grid.Column="1"
                             FontAttributes="Bold"
+                            FontSize="Medium"
                             Text="{Binding PlaceName}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontSize="Small"
+                            Text="{Binding ProvinceName}" />
                     </Grid>
                 </DataTemplate>
             </helpers:PlaceSearchHandler.ItemTemplate>
@@ -42,7 +56,6 @@
         <StackLayout Margin="5">
             <ListView
                 x:Name="PlacesListView"
-                CachingStrategy="RecycleElement"
                 HasUnevenRows="true"
                 IsPullToRefreshEnabled="true"
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
@@ -53,48 +66,62 @@
                 VerticalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
-                                <Grid Padding="10">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Image
-                                        Grid.RowSpan="4"
-                                        Aspect="AspectFill"
-                                        HeightRequest="120"
-                                        Source="{Binding PlaceImage}"
-                                        WidthRequest="120" />
-                                    <Label
-                                        Grid.Row="0"
-                                        Grid.Column="1"
-                                        FontAttributes="Bold"
-                                        FontSize="18"
-                                        Text="{Binding PlaceName}" />
-
-                                    <Label
-                                        Grid.Row="1"
-                                        Grid.Column="1"
-                                        LineHeight="100"
-                                        Text="{Binding CategoryName}" />
-                                    <Label
-                                        Grid.Row="2"
-                                        Grid.Column="1"
-                                        Text="{Binding PlaceRating}" />
-                                    <Label
-                                        Grid.Row="3"
-                                        Grid.Column="1"
-                                        Text="{Binding PlaceVisitor}" />
-                                </Grid>
-                            </StackLayout>
-                        </ViewCell>
+                        <customControls:CustomViewCell SelectedItemBackgroundColor="White">
+                            <ViewCell.View>
+                                <StackLayout Padding="10">
+                                    <Frame
+                                        Padding="0"
+                                        BorderColor="#449D44"
+                                        CornerRadius="10"
+                                        HeightRequest="250">
+                                        <StackLayout Padding="8" Spacing="16">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="65" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <Image
+                                                    Grid.RowSpan="2"
+                                                    Grid.ColumnSpan="2"
+                                                    Margin="-8,-8,-8,-8"
+                                                    Aspect="AspectFill"
+                                                    HeightRequest="250"
+                                                    Source="{Binding PlaceImage}" />
+                                                <Label
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="2"
+                                                    Grid.Column="0"
+                                                    Grid.ColumnSpan="2"
+                                                    FontSize="Large"
+                                                    HorizontalOptions="EndAndExpand"
+                                                    Text="{Binding PlaceName}"
+                                                    TextColor="White"
+                                                    VerticalOptions="EndAndExpand" />
+                                                <Image
+                                                    Grid.Row="1"
+                                                    Grid.Column="0"
+                                                    Aspect="AspectFill"
+                                                    HorizontalOptions="StartAndExpand"
+                                                    Source="ic_account_visitor.png"
+                                                    VerticalOptions="EndAndExpand" />
+                                                <Label
+                                                    Grid.Row="1"
+                                                    Grid.Column="0"
+                                                    FontSize="Large"
+                                                    HorizontalOptions="EndAndExpand"
+                                                    Text="{Binding PlaceVisitor}"
+                                                    TextColor="White"
+                                                    VerticalOptions="EndAndExpand" />
+                                            </Grid>
+                                        </StackLayout>
+                                    </Frame>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </customControls:CustomViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

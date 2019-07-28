@@ -53,8 +53,8 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="80" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="70" />
-                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="40" />
                     </Grid.ColumnDefinitions>
                     <Label
                         FontSize="18"

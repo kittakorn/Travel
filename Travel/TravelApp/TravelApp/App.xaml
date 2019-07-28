@@ -14,6 +14,9 @@
             <Style TargetType="Label">
                 <Setter Property="FontFamily" Value="Prompt-Regular.ttf#Prompt-Regular" />
             </Style>
+            <Style TargetType="SearchHandler">
+                <Setter Property="FontFamily" Value="Prompt-Regular.ttf#Prompt-Regular" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
