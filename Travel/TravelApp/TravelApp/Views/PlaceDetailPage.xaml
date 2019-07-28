@@ -3,13 +3,13 @@
     x:Class="TravelApp.Views.PlaceDetailPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-    xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:panCardView="clr-namespace:PanCardView;assembly=PanCardView"
     xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
-    Title="{Binding Title}"
+    Title="ข้อมูลสถานที่"
     mc:Ignorable="d">
-
     <ContentPage.BindingContext>
         <viewModels:PlaceDetailViewModel />
     </ContentPage.BindingContext>
@@ -21,6 +21,31 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Margin="10">
+                <Label
+                    FontSize="Title"
+                    HorizontalOptions="Center"
+                    Style="{DynamicResource LabelBoldStyle}"
+                    Text="{Binding PlaceName}" />
+                <panCardView:CarouselView ItemsSource="{Binding Place.PlaceImages}">
+                    <panCardView:CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <ContentView>
+                                <Frame
+                                    Padding="0"
+                                    CornerRadius="10"
+                                    HasShadow="false"
+                                    HeightRequest="200"
+                                    HorizontalOptions="Center"
+                                    IsClippedToBounds="true"
+                                    VerticalOptions="Center"
+                                    WidthRequest="320">
+                                    <Image Aspect="AspectFill" Source="{Binding .}" />
+                                </Frame>
+                            </ContentView>
+                        </DataTemplate>
+                    </panCardView:CarouselView.ItemTemplate>
+                    <controls:IndicatorsControl />
+                </panCardView:CarouselView>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -28,12 +53,12 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="80" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="70" />
                         <ColumnDefinition Width="20" />
                     </Grid.ColumnDefinitions>
                     <Label
-                        FontAttributes="Bold"
                         FontSize="18"
+                        Style="{DynamicResource LabelBoldStyle}"
                         Text="Rating" />
                     <Label
                         Grid.Column="1"
@@ -41,8 +66,8 @@
                         Text="{Binding Place.PlaceRating}" />
                     <Label
                         Grid.Column="2"
-                        FontAttributes="Bold"
                         FontSize="18"
+                        Style="{DynamicResource LabelBoldStyle}"
                         Text="ผู้เข้าชม" />
                     <Label
                         Grid.Column="3"
@@ -60,8 +85,8 @@
                     <Label
                         Grid.Row="0"
                         Grid.Column="0"
-                        FontAttributes="Bold"
                         FontSize="18"
+                        Style="{DynamicResource LabelBoldStyle}"
                         Text="ประเภท" />
                     <Label
                         Grid.Row="0"
@@ -70,8 +95,8 @@
                         Text="{Binding Place.CategoryName}" />
                 </Grid>
                 <Label
-                    FontAttributes="Bold"
                     FontSize="18"
+                    Style="{DynamicResource LabelBoldStyle}"
                     Text="รายละเอียด" />
                 <Label FontSize="18" Text="{Binding Place.PlaceDescription}" />
                 <Grid>
@@ -88,8 +113,8 @@
                     <Label
                         Grid.Row="0"
                         Grid.Column="0"
-                        FontAttributes="Bold"
                         FontSize="18"
+                        Style="{DynamicResource LabelBoldStyle}"
                         Text="ที่อยู่" />
                     <Label
                         Grid.Row="0"
@@ -99,8 +124,8 @@
                     <Label
                         Grid.Row="1"
                         Grid.Column="0"
-                        FontAttributes="Bold"
                         FontSize="18"
+                        Style="{DynamicResource LabelBoldStyle}"
                         Text="วันเปิดทำการ" />
                     <Label
                         Grid.Row="1"
@@ -110,8 +135,8 @@
                     <Label
                         Grid.Row="2"
                         Grid.Column="0"
-                        FontAttributes="Bold"
                         FontSize="18"
+                        Style="{DynamicResource LabelBoldStyle}"
                         Text="เบอร์โทรศัพท์" />
                     <Label
                         Grid.Row="2"
