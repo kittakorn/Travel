@@ -13,7 +13,6 @@ namespace TravelWeb.Models
         [DataType(DataType.MultilineText)]
         public string PlaceDescription { get; set; }
         public string PlaceImage { get; set; }
-        public Nullable<decimal> PlaceRating { get; set; }
         public string PlaceLatitude { get; set; }
         public string PlaceLongitude { get; set; }
         public int PlaceVisitor { get; set; }
@@ -26,7 +25,6 @@ namespace TravelWeb.Models
 
         public virtual Category Category { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<Favorite> Favorites { get; set; }
         public virtual Province Province { get; set; }
     }
 

@@ -8,15 +8,12 @@
         <EntityTypeShape EntityType="TravelModel.AspNetUser" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="TravelModel.Category" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="TravelModel.Comment" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TravelModel.Favorite" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TravelModel.Place" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="TravelModel.Province" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="TravelModel.FK_Comment_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="TravelModel.FK_Favorite_User" ManuallyRouted="false" />
-        <AssociationConnector Association="TravelModel.FK_Place_Category" ManuallyRouted="false" />
-        <AssociationConnector Association="TravelModel.FK_Comments_Place" ManuallyRouted="false" />
-        <AssociationConnector Association="TravelModel.FK_Favorite_Place" ManuallyRouted="false" />
-        <AssociationConnector Association="TravelModel.FK_Places_Province" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TravelModel.Place" Width="1.5" PointX="3" PointY="1.375" />
+        <AssociationConnector Association="TravelModel.FK_Place_Category" />
+        <AssociationConnector Association="TravelModel.FK_Comments_Place" />
+        <AssociationConnector Association="TravelModel.FK_Places_Province" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

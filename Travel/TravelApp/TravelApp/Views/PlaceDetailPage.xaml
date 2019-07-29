@@ -53,24 +53,14 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="80" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="60" />
-                        <ColumnDefinition Width="40" />
                     </Grid.ColumnDefinitions>
                     <Label
-                        FontSize="18"
-                        Style="{DynamicResource LabelBoldStyle}"
-                        Text="Rating" />
-                    <Label
-                        Grid.Column="1"
-                        FontSize="18"
-                        Text="{Binding Place.PlaceRating}" />
-                    <Label
-                        Grid.Column="2"
+                        Grid.Column="0"
                         FontSize="18"
                         Style="{DynamicResource LabelBoldStyle}"
                         Text="ผู้เข้าชม" />
                     <Label
-                        Grid.Column="3"
+                        Grid.Column="1"
                         FontSize="18"
                         Text="{Binding Place.PlaceVisitor}" />
                 </Grid>

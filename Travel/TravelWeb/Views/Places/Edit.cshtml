@@ -58,17 +58,13 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-2">
-                    @Html.LabelFor(model => model.PlaceRating)
-                    @Html.EditorFor(model => model.PlaceRating, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.PlaceRating, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-md-5">
+               
+                <div class="form-group col-md-6">
                     @Html.LabelFor(model => model.PlaceLatitude)
                     @Html.EditorFor(model => model.PlaceLatitude, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.PlaceLatitude, "", new { @class = "text-danger" })
                 </div>
-                <div class="form-group col-md-5">
+                <div class="form-group col-md-6">
                     @Html.LabelFor(model => model.PlaceLongitude)
                     @Html.EditorFor(model => model.PlaceLongitude, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.PlaceLongitude, "", new { @class = "text-danger" })
@@ -169,7 +165,7 @@
 
                     console.log(place);
                     $('#PlaceName').val(place.name);
-                    $('#PlaceRating').val(place.rating);
+                   
                     $('#PlaceOpenDate').val(place.opening_hours.weekday_text.toString().replace(/,/g, '\n'));
                     $('#PlaceAddress').val(place.formatted_address);
                     $('#PlacePhone').val(place.formatted_phone_number);
@@ -181,7 +177,7 @@
             });
         }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkadrBnn4vIzK1XTlxmXsJ2EIFvVQGjuw&libraries=places&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDds8Wiy6WnpS2wuEbII_Fqch_94vTUrj8&libraries=places&callback=initMap"
             async defer></script>
 }
 

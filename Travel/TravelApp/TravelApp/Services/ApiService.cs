@@ -126,5 +126,15 @@ namespace TravelApp.Services
             var response = await client.PostAsync(Constant.ApiAddress + "api/Comments", content);
             return response.IsSuccessStatusCode;
         }
+
+        public async Task GetPutAsync(int id, Place place)
+        {
+            var client = new HttpClient();
+            var json = JsonConvert.SerializeObject(place);
+            HttpContent content = new StringContent(json);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            await client.PutAsync(
+                Constant.ApiAddress + "api/Places/" + id, content);
+        }
     }
 }

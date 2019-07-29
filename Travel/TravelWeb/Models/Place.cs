@@ -18,14 +18,12 @@ namespace TravelWeb.Models
         public Place()
         {
             this.Comments = new HashSet<Comment>();
-            this.Favorites = new HashSet<Favorite>();
         }
     
         public int PlaceId { get; set; }
         public string PlaceName { get; set; }
         public string PlaceDescription { get; set; }
         public string PlaceImage { get; set; }
-        public Nullable<decimal> PlaceRating { get; set; }
         public string PlaceLatitude { get; set; }
         public string PlaceLongitude { get; set; }
         public int PlaceVisitor { get; set; }
@@ -38,8 +36,6 @@ namespace TravelWeb.Models
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Favorite> Favorites { get; set; }
         public virtual Province Province { get; set; }
     }
 }

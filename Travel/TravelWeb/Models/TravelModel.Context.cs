@@ -28,8 +28,7 @@ namespace TravelWeb.Models
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
-        public virtual DbSet<Favorite> Favorites { get; set; }
-        public virtual DbSet<Place> Places { get; set; }
         public virtual DbSet<Province> Provinces { get; set; }
+        public virtual DbSet<Place> Places { get; set; }
     }
 }

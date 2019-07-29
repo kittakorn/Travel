@@ -40,18 +40,9 @@ namespace TravelWeb.Controllers.api
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutPlace(int id, Place place)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != place.PlaceId)
-            {
-                return BadRequest();
-            }
-
-            _db.Entry(place).State = EntityState.Modified;
-
+            var findPlace = _db.Places.Find(id);
+            findPlace.PlaceVisitor = findPlace.PlaceVisitor + 1;
+            _db.Entry(findPlace).State = EntityState.Modified;
             try
             {
                 await _db.SaveChangesAsync();
@@ -67,7 +58,6 @@ namespace TravelWeb.Controllers.api
                     throw;
                 }
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
 

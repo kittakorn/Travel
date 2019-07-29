@@ -61,6 +61,7 @@ namespace TravelApp.ViewModels
                     Place = placelist.FirstOrDefault(x => x.PlaceName == Uri.UnescapeDataString(PlaceName));
                     Title = Place?.PlaceName;
                     Place.PlaceDescription = "      " + Place.PlaceDescription;
+                    await ApiService.GetPutAsync(Place.PlaceId,Place);
                     SetCustomMap();
                 });
             }

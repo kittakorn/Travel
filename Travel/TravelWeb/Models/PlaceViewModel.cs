@@ -21,7 +21,7 @@ namespace TravelWeb.Models
             PlaceOpenDate = place.PlaceOpenDate;
             PlacePhone = place.PlacePhone;
             PlaceDescription = place.PlaceDescription;
-            PlaceRating = place.PlaceRating;
+           
             PlaceVisitor = place.PlaceVisitor;
             Comments = place.Comments.ToList().Select(x => new CommentViewModel(x)).ToList();
         }
@@ -37,7 +37,6 @@ namespace TravelWeb.Models
         public string PlaceOpenDate { get; set; }
         public string PlacePhone { get; set; }
         public string PlaceDescription { get; set; }
-        public decimal? PlaceRating { get; set; }
         public int PlaceVisitor { get; set; }
         public List<CommentViewModel> Comments { get; set; }
     }

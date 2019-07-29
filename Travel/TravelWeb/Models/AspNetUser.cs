@@ -18,7 +18,6 @@ namespace TravelWeb.Models
         public AspNetUser()
         {
             this.Comments = new HashSet<Comment>();
-            this.Favorites = new HashSet<Favorite>();
         }
     
         public string Id { get; set; }
@@ -40,7 +39,5 @@ namespace TravelWeb.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Favorite> Favorites { get; set; }
     }
 }
