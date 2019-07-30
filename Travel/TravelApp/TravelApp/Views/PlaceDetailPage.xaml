@@ -17,7 +17,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Clicked="NavigateToComment_OnClicked" IconImageSource="ic_action_comment.png" />
-        <ToolbarItem Clicked="NavigateToMap_OnClicked" IconImageSource="ic_action_local_dining.png" />
+        <ToolbarItem Clicked="NavigateToMap_OnClicked" IconImageSource="ic_action_pin_drop.png" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>

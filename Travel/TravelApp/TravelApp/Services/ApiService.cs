@@ -32,7 +32,15 @@ namespace TravelApp.Services
             var response = await client.PostAsync(Constant.ApiAddressAccount + "api/Account/ChangePassword", content);
             return response.IsSuccessStatusCode;
         }
-
+        public async Task<PlaceSearch> GetMapAsync(Position position,int distant,string type)
+        {
+            var client = new HttpClient();
+            var json = await client.GetStringAsync("https://maps.googleapis.com/maps/api/place/nearbysearch/json" + 
+                                                   $"?location={position.Latitude},{position.Longitude}" + 
+                                                   $"&radius={distant*1000}&keyword={type}&key=AIzaSyDds8Wiy6WnpS2wuEbII_Fqch_94vTUrj8");
+            var result = JsonConvert.DeserializeObject<PlaceSearch>(json);
+            return result;
+        }
         public async Task<User> GetUserAsync()
         {
             var client = new HttpClient();

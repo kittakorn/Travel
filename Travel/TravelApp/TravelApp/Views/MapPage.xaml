@@ -3,17 +3,83 @@
     x:Class="TravelApp.Views.MapPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControls="clr-namespace:TravelApp.CustomControls;assembly=TravelApp"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
     Title="สถาณที่ใกล้เคียง"
-    BackgroundImageSource="bg.jpg"
+    BackgroundColor="#A0CBD4"
+    Visual="Material"
     mc:Ignorable="d">
+    <ContentPage.BindingContext>
+        <viewModels:MapViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <Label
-                HorizontalOptions="CenterAndExpand"
-                Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView>
+            <StackLayout Padding="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="60" />
+                    </Grid.RowDefinitions>
+
+                    <Label FontSize="Medium" Text="ประเภท" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        FontSize="Medium"
+                        Text="ระยะทาง" />
+                    <Picker
+                        x:Name="TypePicker"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        SelectedItem="{Binding Type}" />
+                    <Picker
+                        x:Name="DistantPicker"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        SelectedItem="{Binding Distant}" />
+                </Grid>
+                <Button
+                    BackgroundColor="#2196F3"
+                    Command="{Binding SearchCommand}"
+                    Text="ค้นหา" />
+                <ContentView
+                    Padding="0,0,0,10"
+                    Content="{Binding Map}"
+                    HeightRequest="300" />
+                <ListView
+                    HasUnevenRows="true"
+                    HeightRequest="300"
+                    ItemsSource="{Binding Results}"
+                    SelectedItem="{Binding SelectMap}"
+                    SeparatorVisibility="None"
+                    VerticalOptions="FillAndExpand">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <customControls:CustomViewCell SelectedItemBackgroundColor="#A0CBD4">
+                                <ViewCell.View>
+                                    <StackLayout Padding="0,0,0,5">
+                                        <Frame
+                                            Padding="0"
+                                            BackgroundColor="AntiqueWhite"
+                                            BorderColor="#2196F3"
+                                            CornerRadius="10">
+                                            <StackLayout Padding="8" Spacing="16">
+                                                <Label FontSize="Medium" Text="{Binding Name}" />
+                                            </StackLayout>
+                                        </Frame>
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </customControls:CustomViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

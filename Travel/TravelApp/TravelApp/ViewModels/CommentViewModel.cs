@@ -102,7 +102,7 @@ namespace TravelApp.ViewModels
                         if (string.IsNullOrEmpty(Setting.UserId))
                         {
                             Toast.Warning("กรุณาเข้าสู่ระบบก่อนแสดงความคิดเห็น");
-                            await Application.Current.MainPage.Navigation.PushModalAsync(new LoginPage());
+                            await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new LoginPage()));
                         }
                         else if (await ApiService.PostCommentAsync(Comment))
                         {

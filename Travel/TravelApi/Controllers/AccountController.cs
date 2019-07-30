@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -165,9 +166,12 @@ namespace TravelApi.Controllers
                 return BadRequest(ModelState);
             }
 
+
             var user = await UserManager.FindAsync(model.Email, model.Password);
-            if (user == null)
-                return NotFound();
+            if (user.Name.Equals(model.Name))
+                return Ok();
+            if (UserManager.Users.Any(x => x.Name.Equals(model.Name)))
+                return BadRequest();
             user.Name = model.Name;
             await UserManager.UpdateAsync(user);
             return Ok(user);
@@ -284,7 +288,7 @@ namespace TravelApi.Controllers
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
-                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.Name, user.Email, user.Id,  user.UserRole);
+                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.Name, user.Email, user.Id, user.UserRole);
                 Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
             }
             else
@@ -356,7 +360,8 @@ namespace TravelApi.Controllers
                 Name = model.Name,
                 UserRole = "Member",
             };
-
+            if (UserManager.Users.Any(x => x.Name.Equals(user.Name)))
+                return BadRequest();
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)

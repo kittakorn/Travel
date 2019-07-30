@@ -100,7 +100,7 @@
                                                     HorizontalOptions="EndAndExpand"
                                                     Text="{Binding PlaceName}"
                                                     TextColor="White"
-                                                    VerticalOptions="EndAndExpand" />
+                                                    VerticalOptions="StartAndExpand" />
                                                 <Image
                                                     Grid.Row="1"
                                                     Grid.Column="0"

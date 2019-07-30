@@ -45,6 +45,7 @@ namespace TravelApi.Models
     public class RegisterBindingModel
     {
         [Required]
+        [DataType(DataType.EmailAddress)]
         [Display(Name = "Email")]
         public string Email { get; set; }
 

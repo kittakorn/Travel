@@ -121,8 +121,9 @@
             var marker = new google.maps.Marker({
                 position: myLatLng,
                 map: map,
-                title: @Model.PlaceName
+                title: '@Model.PlaceName'
             });
+            marker.setMap(map);
             // Listen for the event fired when the user selects a prediction and retrieve
             // more details for that place.
             searchBox.addListener('places_changed', function () {

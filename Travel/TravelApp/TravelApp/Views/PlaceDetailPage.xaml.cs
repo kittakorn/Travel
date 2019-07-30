@@ -30,7 +30,9 @@ namespace TravelApp.Views
 
         async void NavigateToMap_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new MapPage());
+            var position = new Position(Convert.ToDouble(viewModel.Place.PlaceLatitude), 
+                Convert.ToDouble(viewModel.Place.PlaceLongitude));
+            await Navigation.PushAsync(new MapPage(viewModel.Place));
         }
     }
 }
