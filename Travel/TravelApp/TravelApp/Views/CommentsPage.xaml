@@ -3,10 +3,13 @@
     x:Class="TravelApp.Views.CommentsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControls="clr-namespace:TravelApp.CustomControls;assembly=TravelApp"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
     Title="ความคิดเห็น"
+    BackgroundColor="#A0CBD4"
+    Visual="Material"
     mc:Ignorable="d">
 
     <ContentPage.BindingContext>
@@ -15,30 +18,82 @@
 
 
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Padding="10">
             <ListView
                 x:Name="CommentsListView"
-                CachingStrategy="RecycleElement"
                 HasUnevenRows="true"
                 IsPullToRefreshEnabled="true"
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                 ItemSelected="OnCommentSelected"
                 ItemsSource="{Binding Comments}"
                 RefreshCommand="{Binding LoadCommentCommand}"
+                SeparatorVisibility="None"
                 VerticalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
-                                <Label Text="{Binding Name}" />
-                                <Label Text="{Binding CommentDescription}" />
-                            </StackLayout>
-                        </ViewCell>
+                        <customControls:CustomViewCell SelectedItemBackgroundColor="#A0CBD4">
+                            <ViewCell.View>
+                                <StackLayout Padding="0,0,0,5">
+                                    <Frame
+                                        Padding="0"
+                                        BackgroundColor="AntiqueWhite"
+                                        BorderColor="#2196F3"
+                                        CornerRadius="10">
+                                        <StackLayout Padding="8" Spacing="16">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <Label
+                                                    Grid.Row="0"
+                                                    Grid.Column="0"
+                                                    FontSize="Medium"
+                                                    Text="{Binding Name}" />
+                                                <Label
+                                                    Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    FontSize="10"
+                                                    HorizontalOptions="EndAndExpand"
+                                                    Text="{Binding CommentDate}"
+                                                    VerticalOptions="StartAndExpand" />
+                                                <Label
+                                                    Grid.Row="1"
+                                                    Grid.Column="0"
+                                                    Grid.ColumnSpan="2"
+                                                    FontSize="Medium"
+                                                    Text="{Binding CommentDescription}" />
+                                            </Grid>
+                                        </StackLayout>
+                                    </Frame>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </customControls:CustomViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Entry Placeholder="ข้อความ" Text="{Binding Comment.CommentDescription}" />
-            <Button Command="{Binding AddCommentCommand}" Text="บันทึก" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Entry
+                    BackgroundColor="White"
+                    Placeholder="ข้อความ"
+                    Text="{Binding Comment.CommentDescription}" />
+                <Button
+                    Grid.Column="1"
+                    BackgroundColor="#2196F3"
+                    Command="{Binding AddCommentCommand}"
+                    Text="บันทึก" />
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

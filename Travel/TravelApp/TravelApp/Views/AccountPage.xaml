@@ -7,6 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
     Title="ข้อมูลผู้ใช้งาน"
+    Visual="Material"
+    BackgroundImageSource="bg.jpg"
+
     mc:Ignorable="d">
 
     <ContentPage.BindingContext>
@@ -15,23 +18,104 @@
 
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout IsVisible="{Binding ProfileVisible}">
-                <Label Text="อีเมล" />
-                <Label Text="{Binding User.Email}" />
-                <Label Text="ชื่อที่แสดง" />
-                <Label Text="{Binding User.Name}" />
-                <Label Text="วันที่สมัคร" />
-                <Label Text="{Binding User.JoinDate}" />
-                <Label Text="เข้าสู่ระบบล่าสุด" />
-                <Label Text="{Binding User.LoginDate}" />
-                <Button Clicked="NavigateToUpdate_OnClicked" Text="เปลี่ยนชื่อ" />
-                <Button Clicked="NavigateToChangePassword_OnClicked" Text="เปลี่ยนรหัสผ่าน" />
-                <Button Clicked="Logout_OnClicked" Text="ออกจากระบบ" />
+            <StackLayout
+                Padding="20"
+                HorizontalOptions="CenterAndExpand"
+                IsVisible="{Binding ProfileVisible}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label
+                        FontSize="Medium"
+                        Style="{DynamicResource LabelBoldStyle}"
+                        Text="ชื่อที่แสดง" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        FontSize="Medium"
+                        Text="{Binding User.Name}" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontSize="Medium"
+                        Style="{DynamicResource LabelBoldStyle}"
+                        Text="อีเมล" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontSize="Medium"
+                        Text="{Binding User.Email}" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        FontSize="Medium"
+                        Style="{DynamicResource LabelBoldStyle}"
+                        Text="วันที่สมัคร" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        FontSize="Medium"
+                        Text="{Binding User.JoinDate}" />
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        FontSize="Medium"
+                        Style="{DynamicResource LabelBoldStyle}"
+                        Text="เข้าสู่ระบบล่าสุด" />
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        FontSize="Medium"
+                        Text="{Binding User.LoginDate}" />
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Button
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        BackgroundColor="#16A085"
+                        Clicked="NavigateToUpdate_OnClicked"
+                        Text="เปลี่ยนชื่อ" />
+                    <Button
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        BackgroundColor="#5F6A6A"
+                        Clicked="NavigateToChangePassword_OnClicked"
+                        Text="เปลี่ยนรหัสผ่าน" />
 
+                </Grid>
+                <Button
+                    BackgroundColor="#C9302C"
+                    Clicked="Logout_OnClicked"
+                    Text="ออกจากระบบ" />
             </StackLayout>
-            <StackLayout IsVisible="{Binding AccountVisible}">
-                <Button Clicked="NavigateToLogin_OnClicked" Text="เข้าสู่ระบบ" />
-                <Button Clicked="NavigateToRegister_OnClicked" Text="สมัครสมาชิก" />
+            <StackLayout
+                Padding="60"
+                IsVisible="{Binding AccountVisible}"
+                VerticalOptions="CenterAndExpand">
+                <Button
+                    BackgroundColor="#2196F3"
+                    Clicked="NavigateToLogin_OnClicked"
+                    Text="เข้าสู่ระบบ" />
+                <Button
+                    BackgroundColor="#E5E7E9"
+                    Clicked="NavigateToRegister_OnClicked"
+                    Text="สมัครสมาชิก"
+                    TextColor="Black" />
             </StackLayout>
 
         </StackLayout>

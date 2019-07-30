@@ -9,6 +9,7 @@
     xmlns:panCardView="clr-namespace:PanCardView;assembly=PanCardView"
     xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
     Title="ข้อมูลสถานที่"
+    BackgroundImageSource="bg.jpg"
     mc:Ignorable="d">
     <ContentPage.BindingContext>
         <viewModels:PlaceDetailViewModel />
@@ -134,7 +135,10 @@
                         FontSize="18"
                         Text="{Binding Place.PlacePhone}" />
                 </Grid>
-                <ContentView Content="{Binding Map}" HeightRequest="300" />
+                <ContentView
+                    Padding="0,0,0,20"
+                    Content="{Binding Map}"
+                    HeightRequest="300" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

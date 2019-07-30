@@ -7,6 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
     Title="เช้าสู่ระบบ"
+    BackgroundImageSource="bg.jpg"
+    Visual="Material"
     mc:Ignorable="d">
 
     <ContentPage.BindingContext>
@@ -18,10 +20,19 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout>
-            <Entry Placeholder="อีเมล" Text="{Binding Login.Email}" />
-            <Entry Placeholder="รหัสผ่าน" Text="{Binding Login.Password}" />
-            <Button Command="{Binding LoginCommand}" Text="เข้าสู่ระบบ" />
+        <StackLayout Padding="50">
+            <Entry
+                Keyboard="Email"
+                Placeholder="อีเมล"
+                Text="{Binding Login.Email}" />
+            <Entry
+                IsPassword="True"
+                Placeholder="รหัสผ่าน"
+                Text="{Binding Login.Password}" />
+            <Button
+                BackgroundColor="#2196F3"
+                Command="{Binding LoginCommand}"
+                Text="เข้าสู่ระบบ" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

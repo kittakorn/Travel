@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
     Title="สถาณที่ท่องเที่ยว"
+    BackgroundColor="#A0CBD4"
     Visual="Material"
     mc:Ignorable="d">
 
@@ -66,18 +67,17 @@
                 VerticalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <customControls:CustomViewCell SelectedItemBackgroundColor="White">
+                        <customControls:CustomViewCell SelectedItemBackgroundColor="#A0CBD4">
                             <ViewCell.View>
                                 <StackLayout Padding="10">
                                     <Frame
                                         Padding="0"
-                                        BorderColor="#449D44"
                                         CornerRadius="10"
                                         HeightRequest="250">
                                         <StackLayout Padding="8" Spacing="16">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="65" />
+                                                    <ColumnDefinition Width="60" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
                                                 <Grid.RowDefinitions>

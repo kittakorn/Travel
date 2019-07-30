@@ -102,8 +102,9 @@
     <script>
         $('.selectpicker').selectpicker();
         function initMap() {
+            var myLatLng = { lat: @Model.PlaceLatitude, lng: @Model.PlaceLongitude };
             var map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: @Model.PlaceLatitude, lng: @Model.PlaceLongitude },
+                center: myLatLng,
                 zoom: 13,
                 mapTypeId: 'roadmap'
             });
@@ -117,7 +118,11 @@
                 searchBox.setBounds(map.getBounds());
             });
 
-            var markers = [];
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: @Model.PlaceName
+            });
             // Listen for the event fired when the user selects a prediction and retrieve
             // more details for that place.
             searchBox.addListener('places_changed', function () {

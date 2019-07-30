@@ -7,6 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:TravelApp.ViewModels;assembly=TravelApp"
     Title="สมัครสมาชิก"
+    BackgroundImageSource="bg.jpg"
+    Visual="Material"
     mc:Ignorable="d">
 
     <ContentPage.BindingContext>
@@ -18,9 +20,12 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Padding="50">
             <Entry Placeholder="ชื่อ" Text="{Binding Register.Name}" />
-            <Entry Placeholder="อีเมล" Text="{Binding Register.Email}" />
+            <Entry
+                Keyboard="Email"
+                Placeholder="อีเมล"
+                Text="{Binding Register.Email}" />
             <Entry
                 IsPassword="True"
                 Placeholder="รหัสผ่าน"
@@ -29,7 +34,10 @@
                 IsPassword="True"
                 Placeholder="ยืนยันรหัสผ่าน"
                 Text="{Binding Register.ConfirmPassword}" />
-            <Button Command="{Binding RegisterCommand}" Text="สมัครสมาชิก" />
+            <Button
+                BackgroundColor="#2196F3"
+                Command="{Binding RegisterCommand}"
+                Text="สมัครสมาชิก" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
