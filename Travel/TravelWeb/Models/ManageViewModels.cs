@@ -5,82 +5,46 @@ using Microsoft.Owin.Security;
 
 namespace TravelWeb.Models
 {
-    public class IndexViewModel
-    {
-        public bool HasPassword { get; set; }
-        public IList<UserLoginInfo> Logins { get; set; }
-        public string PhoneNumber { get; set; }
-        public bool TwoFactor { get; set; }
-        public bool BrowserRemembered { get; set; }
-    }
 
-    public class ManageLoginsViewModel
+    public class UpdateAccountViewModel
     {
-        public IList<UserLoginInfo> CurrentLogins { get; set; }
-        public IList<AuthenticationDescription> OtherLogins { get; set; }
-    }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูล")]
+        [StringLength(20, ErrorMessage = "ความยาวระหว่าง 5 - 20 ตัวอักษร", MinimumLength = 5)]
+        [Display(Name = "ชื่อที่แสดง")]
+        public string Name { get; set; }
 
-    public class FactorViewModel
-    {
-        public string Purpose { get; set; }
-    }
 
-    public class SetPasswordViewModel
-    {
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "กรุณากรอกข้อมูล")]
+        [Display(Name = "เบอร์โทรศัพท์")]
+        [RegularExpression(@"^(^\+62\s?|^0)(\d{3,4}-?){2}\d{3,4}$", ErrorMessage = "เบอร์โทรศัพท์ไม่ถูกต้อง")]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "เบอร์โทรศัพท์ไม่ถูกต้อง")]
+        public string Phone { get; set; }
+
+
+        [Required(ErrorMessage = "กรุณากรอกข้อมูล")]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
-        public string NewPassword { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
+        [Display(Name = "ยืนยันรหัสผ่าน")]
+        public string Password { get; set; }
     }
 
     public class ChangePasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "กรุณากรอกข้อมูล")]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "รหัสผ่านเก่า")]
         public string OldPassword { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "กรุณากรอกข้อมูล")]
+        [StringLength(100, ErrorMessage = "ความยาวไม่ตำกว่า 6 ตัวอักษร", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "รหัสผ่านใหม่")]
         public string NewPassword { get; set; }
 
+        [Required(ErrorMessage = "กรุณากรอกข้อมูล")]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "ยืนยันรหัสผ่าน")]
+        [Compare("NewPassword", ErrorMessage = "รหัสผ่านไม่ตรงกัน")]
         public string ConfirmPassword { get; set; }
     }
 
-    public class AddPhoneNumberViewModel
-    {
-        [Required]
-        [Phone]
-        [Display(Name = "Phone Number")]
-        public string Number { get; set; }
-    }
-
-    public class VerifyPhoneNumberViewModel
-    {
-        [Required]
-        [Display(Name = "Code")]
-        public string Code { get; set; }
-
-        [Required]
-        [Phone]
-        [Display(Name = "Phone Number")]
-        public string PhoneNumber { get; set; }
-    }
-
-    public class ConfigureTwoFactorViewModel
-    {
-        public string SelectedProvider { get; set; }
-        public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
-    }
 }

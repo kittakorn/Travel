@@ -347,6 +347,13 @@ namespace TravelApi.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            if (!roleManager.RoleExists("Member"))
+            {
+                var role = new IdentityRole { Name = "Member" };
+                roleManager.Create(role);
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -363,7 +370,7 @@ namespace TravelApi.Controllers
             if (UserManager.Users.Any(x => x.Name.Equals(user.Name)))
                 return BadRequest();
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
+            await UserManager.AddToRoleAsync(user.Id, "Member");
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);

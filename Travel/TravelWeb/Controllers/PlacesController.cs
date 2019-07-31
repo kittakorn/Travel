@@ -12,7 +12,7 @@ using TravelWeb.Models;
 
 namespace TravelWeb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class PlacesController : Controller
     {
         private readonly DatabaseEntities _db = new DatabaseEntities();
@@ -57,7 +57,6 @@ namespace TravelWeb.Controllers
             return View(place);
         }
 
-        // GET: Places/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -117,6 +116,18 @@ namespace TravelWeb.Controllers
             }
             return RedirectToAction("Edit", new { id });
         }
+
+        public async Task<ActionResult> DeleteComment(int id)
+        {
+            Comment comment = await _db.Comments.FindAsync(id);
+            if (comment != null)
+            {
+                _db.Comments.Remove(comment);
+                _db.SaveChanges();
+            }
+            return RedirectToAction("Details", new { id = comment.CommentPlaceId });
+        }
+
 
         protected override void Dispose(bool disposing)
         {
